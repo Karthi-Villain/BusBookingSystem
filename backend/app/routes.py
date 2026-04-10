@@ -1,15 +1,31 @@
 from flask import Blueprint, request, jsonify
 from app.models import db, Route, Bus, Seat, Booking, Passenger, User, RouteStop
 from datetime import datetime, timedelta
-import random, uuid, os, json
+import random, uuid, os, json, base64, re 
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.utils import get_or_create_seats
 from functools import wraps
 from app.auth_utils import decode_token, generate_token
 
 from app.utils import send_email_async
-from app.utils import get_welcome_email, get_booking_confirmation_email, get_login_alert_email
-from datetime import datetime
+from app.utils import get_welcome_email, get_booking_confirmation_email, get_login_alert_email, get_password_reset_email
+
+serializer = URLSafeTimedSerializer(os.environ.get("SECRET_KEY", "your-secret-key"))
+
+def is_valid_future_date(date_str):
+    """Checks if the date string is today or a future date."""
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d").date()
+        today = datetime.today().date()
+        return dt >= today
+    except (ValueError, TypeError):
+        return False
+
+def is_valid_email(email):
+    """Checks if the email string matches standard email formatting."""
+    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return re.match(email_regex, email) is not None
 
 def login_required(f):
     @wraps(f)
@@ -37,7 +53,6 @@ api = Blueprint("api", __name__, url_prefix="/api")
 def home():
     return {"message": "API working"}
 
-
 # 1. SEARCH BUSES (DATE INDEPENDENT)
 @api.route("/search", methods=["GET"])
 def search_buses():
@@ -48,17 +63,18 @@ def search_buses():
     if not source or not destination or not date:
         return jsonify({"error": "source, destination, date required"}), 400
 
+    if not is_valid_future_date(date):
+        return jsonify({"error": "Invalid date. Must be today or a future date."}), 400
+
     route = Route.query.filter_by(source=source, destination=destination).first()
     if not route:
         return jsonify({"data": []})
 
     buses = Bus.query.filter_by(route_id=route.id).all()
-
     journey_date = datetime.strptime(date, "%Y-%m-%d")
 
     results = []
     for b in buses:
-
         # Available seats (if not generated → random fallback)
         available = Seat.query.filter_by(
             bus_id=b.id,
@@ -68,14 +84,12 @@ def search_buses():
 
         # Proper datetime handling
         boarding_dt = f"{date} {b.boarding_time}"
-
         dropping_dt = (
             journey_date + timedelta(days=1)
         ).strftime("%Y-%m-%d") + f" {b.dropping_time}"
 
         min_seats = min(5, b.total_seats)
         max_seats = b.total_seats
-
         random_seats = random.randint(1, max_seats) if max_seats > 0 else 0
 
         results.append({
@@ -116,8 +130,6 @@ def bus_details(bus_id):
     })
 
 
-
-
 @api.route("/bus/<bus_id>/seats", methods=["GET"])
 def get_seats(bus_id):
     date = request.args.get("date")
@@ -126,6 +138,10 @@ def get_seats(bus_id):
 
     if not date or not destination or not source:
         return jsonify({"error": "date, source, destination required"}), 400
+
+    # DATE VALIDATION CHECK
+    if not is_valid_future_date(date):
+        return jsonify({"error": "Invalid date. Must be today or a future date."}), 400
     
     route = Route.query.filter_by(source=source, destination=destination).first()
 
@@ -133,7 +149,6 @@ def get_seats(bus_id):
         return jsonify({"error": "Route not found"}), 404
 
     route_id = route.id
-    
     seats, error = get_or_create_seats(bus_id, route_id, date)
 
     if error:
@@ -212,6 +227,17 @@ def book_ticket():
     if not all([bus_id, date, seats, passengers]):
         return jsonify({"error": "Invalid payload"}), 400
 
+    if not is_valid_future_date(date):
+        return jsonify({"error": "Invalid journey date. Must be today or a future date."}), 400
+
+    for p in passengers:
+        try:
+            age = int(p.get("age", 0))
+            if age <= 0:
+                return jsonify({"error": f"Age must be a positive number. Invalid age provided for passenger: {p.get('name')}"}), 400
+        except ValueError:
+            return jsonify({"error": f"Invalid age format for passenger: {p.get('name')}"}), 400
+
     total = 0
     booked_seats = []
 
@@ -246,7 +272,7 @@ def book_ticket():
         db.session.add(Passenger(
             booking_id=booking.id,
             name=p["name"],
-            age=p["age"],
+            age=int(p["age"]),
             gender=p["gender"],
             seat_no=p["seatNo"]
         ))
@@ -278,14 +304,18 @@ def book_ticket():
 @api.route("/auth/register", methods=["POST"])
 def register():
     data = request.json
+    email = data.get("email", "")
 
-    if User.query.filter_by(email=data["email"]).first():
-        return {"error": "User already exists"}, 400
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email format"}), 400
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "User already exists"}), 400
 
     user = User(
         name=data["name"],
-        email=data["email"],
-        password=generate_password_hash(data["password"])
+        email=email,
+        password=generate_password_hash(base64.b64decode(data["password"]).decode("utf-8"))
     )
 
     db.session.add(user)
@@ -295,40 +325,81 @@ def register():
     html_content = get_welcome_email(user.name)
     send_email_async(user.email, "Welcome to BusBooking!", html_content)
 
-    return {"message": "User registered"}
-
+    return jsonify({"message": "User registered"})
 
 
 @api.route("/auth/login", methods=["POST"])
 def login():
     data = request.json
-    user = User.query.filter_by(email=data["email"]).first()
+    email = data.get("email", "")
+    device = data.get("device", "Unknown Device")
 
-    if not user or not check_password_hash(user.password, data["password"]):
-        return {"error": "Invalid credentials"}, 401
+    if not is_valid_email(email):
+        return jsonify({"error": "Invalid email format"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not check_password_hash(user.password, base64.b64decode(data["password"]).decode("utf-8")):
+        return jsonify({"error": "Invalid credentials"}), 401
 
     token = generate_token(user.id)
 
-    # TRIGGER LOGIN ALERT IN BACKGROUND
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ip_addr = request.remote_addr or "Unknown IP"
-    html_content = get_login_alert_email(user.name, current_time, ip_addr)
+    
+    html_content = get_login_alert_email(user.name, current_time, ip_addr, device)
     send_email_async(user.email, "Security Alert: New Login Detected", html_content)
 
-    return {
-        "token": token,
-        "userId": user.id,
-        "name": user.name,
-        "email": user.email
-    }
+    return jsonify({"token": token, "userId": user.id, "name": user.name, "email": user.email})
 
+
+@api.route("/auth/forgot", methods=["POST"])
+def forgot_password():
+    data = request.json
+    email = data.get("email")
+    device = data.get("device", "Unknown Device")
+
+    if not email or not is_valid_email(email):
+        return jsonify({"error": "Valid email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    
+    if user:
+        token = serializer.dumps(email, salt="password-reset-salt")
+        reset_link = f"{os.environ.get('VITE_FRONTEND_URL','http://localhost:5173')}/auth?action=reset&token={token}"
+        
+        html_content = get_password_reset_email(user.name, reset_link, device)
+        send_email_async(user.email, "Password Reset Request", html_content)
+
+    return jsonify({"message": "If an account exists with this email, a reset link has been sent."})
+
+@api.route("/auth/reset-password", methods=["POST"])
+def reset_password():
+    data = request.json
+    token = data.get("token")
+    new_password_raw = base64.b64decode(data.get("password")).decode("utf-8")
+
+    try:
+        email = serializer.loads(token, salt="password-reset-salt", max_age=900)
+    except SignatureExpired:
+        return jsonify({"error": "The reset link has expired. Please request a new one."}), 400
+    except BadTimeSignature:
+        return jsonify({"error": "Invalid reset token."}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User no longer exists."}), 404
+
+    user.password = generate_password_hash(new_password_raw)
+    db.session.commit()
+
+    return jsonify({"message": "Password updated successfully!"})
 
 # 6. GET BOOKINGS
 @api.route("/my-bookings", methods=["POST"])
 @login_required
 def my_bookings():
     bookings = Booking.query.filter_by(user_id=request.user_id).all()
-
     result = []
 
     for b in bookings:
@@ -353,7 +424,7 @@ def my_bookings():
             ]
         })
 
-    return {"data": result}
+    return jsonify({"data": result})
 
 
 @api.route("/getRouteStops", methods=["GET"])
@@ -388,6 +459,7 @@ def get_route_stops():
             for s in destination_stops
         ]
     })
+
 
 @api.route("/getBusImages", methods=["GET"])
 def get_bus_images():

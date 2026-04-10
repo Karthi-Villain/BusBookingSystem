@@ -134,8 +134,30 @@ const Seats = () => {
 
   const handlePassengerChange = (index, field, value) => {
     const newPass = [...passengers];
+    
+    if (field === "age" && value !== "") {
+      let numValue = Number(value);
+      if (numValue > 100) {
+        alert("Age cannot exceed 100 years.");
+        value = ""; // Clear the value instead of setting to 100
+      }
+    }
+
     newPass[index][field] = value;
     setPassengers(newPass);
+  };
+
+  const handlePassengerBlur = (index, field, value) => {
+    const newPass = [...passengers];
+
+    if (field === "age" && value !== "") {
+      let numValue = Number(value);
+      if (numValue < 5) {
+        alert("Passenger must be at least 5 years old.");
+        newPass[index][field] = ""; // Clear the value instead of setting to 5
+        setPassengers(newPass);
+      }
+    }
   };
 
   const handlePayment = () => {
@@ -307,7 +329,7 @@ const Seats = () => {
                       </div>
                       <div>
                         <label className="text-xs font-bold text-gray-500 uppercase">Age</label>
-                        <input type="number" placeholder="Years" className="w-full mt-1 px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-primary focus:ring-1 focus:ring-primary" value={p.age} onChange={(e) => handlePassengerChange(idx, "age", e.target.value)} />
+                        <input type="number" min="5" max="100" placeholder="Years" className="w-full mt-1 px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-primary focus:ring-1 focus:ring-primary" value={p.age} onChange={(e) => handlePassengerChange(idx, "age", e.target.value)} onBlur={(e) => handlePassengerBlur(idx, "age", e.target.value)}/>
                       </div>
                       <div className="md:col-span-3">
                         <label className="text-xs font-bold text-gray-500 uppercase block mb-2">Gender</label>

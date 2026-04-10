@@ -1,101 +1,109 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { browserName, deviceType, osName } from 'react-device-detect';
 
 const AuthPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
-  
-  // Form State - updated fullName to name
+  const location = useLocation();
+
+  const [authMode, setAuthMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('action') === 'reset' && params.get('token')) {
+      return 'reset';
+    }
+    return 'login';
+  });
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   
-  // API State
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
 
-  const toggleAuthMode = () => {
-    setIsLogin((prev) => !prev);
-    setError(null); 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const action = params.get('action');
+    const token = params.get('token');
+
+    if (action === 'reset' && token) {
+      setAuthMode('reset');
+    } else if (action === 'forgot') {
+      setAuthMode('forgot');
+    }
+    
+  }, [location.search]);
+
+  const toggleMode = (mode) => {
+    setAuthMode(mode);
+    setError(null);
+    setSuccessMsg(null);
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleAuth = async (e) => {
+    const deviceDetails = `${browserName} on ${osName} (${deviceType})`;
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    setSuccessMsg(null);
 
-    // 1. Construct the full URL using your env variable
-    const baseUrl = import.meta.env.VITE_BUS_API_URL || "http://127.0.0.1:5000/api"; 
-    const endpoint = isLogin ? '/auth/login' : '/auth/register';
-    const url = `${baseUrl}${endpoint}`;
-    
-    // 2. Construct payload matching your API specs
-    const payload = isLogin 
-      ? { email: formData.email, password: formData.password }
-      : { name: formData.name, email: formData.email, password: formData.password };
+    const baseUrl = import.meta.env.VITE_BUS_API_URL || "http://127.0.0.1:5000/api";
+    let endpoint = '';
+    let payload = {};
 
     try {
-      const response = await fetch(url, {
+      if (authMode === 'login') {
+        endpoint = '/auth/login';
+        payload = { email: formData.email, password: btoa(formData.password), device: deviceDetails };
+      } else if (authMode === 'signup') {
+        endpoint = '/auth/register';
+        payload = { name: formData.name, email: formData.email, password: btoa(formData.password) };
+      } else if (authMode === 'forgot') {
+        endpoint = '/auth/forgot';
+        payload = { email: formData.email, device: deviceDetails };
+      } else if (authMode === 'reset') {
+        if (formData.password !== formData.confirmPassword) throw new Error("Passwords do not match");
+        endpoint = '/auth/reset-password';
+        const token = new URLSearchParams(location.search).get('token');
+        payload = { token, password: btoa(formData.password) };
+      }
+
+      const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || data.message || 'Operation failed');
 
-      // Catch non-200 HTTP responses
-      if (!response.ok) {
-        throw new Error(data.message || 'Authentication failed. Please check your credentials.');
-      }
-
-      // 3. Handle specific responses based on mode
-      if (isLogin) {
-        if (data.token) {
-            // Save all the returned details
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('userId', data.userId);
-            localStorage.setItem('userName', data.name);
-            localStorage.setItem('userEmail', data.email);
-            
-            window.dispatchEvent(new Event('authStateChange'));
-
-            // CHECK FOR PENDING REDIRECT
-            const returnUrl = sessionStorage.getItem('returnUrl');
-            if (returnUrl) {
-                sessionStorage.removeItem('returnUrl');
-                navigate(returnUrl); // Route back to seats
-            } else {
-                navigate('/'); 
-            }
-        } else {
-            throw new Error("Invalid response from server.");
-        }
-      } else {
-        // Registration Flow
-        if (data.message === "User registered") {
-          alert("Registration successful! Please sign in.");
-          setIsLogin(true); 
-          setFormData(prev => ({ ...prev, password: '' })); // Clear password for safety
-        } else if (data.message === "User already exists") {
-          throw new Error("User already exists. Please sign in instead.");
-        } else {
-          throw new Error(data.message || "Registration failed.");
-        }
+      // Success Logic
+      if (authMode === 'login') {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('userName', data.name);
+        window.dispatchEvent(new Event('authStateChange'));
+        navigate('/');
+      } else if (authMode === 'signup') {
+        setSuccessMsg("Registration successful! Please login.");
+        setAuthMode('login');
+      } else if (authMode === 'forgot') {
+        setSuccessMsg("Reset link sent! Please check your email inbox.");
+      } else if (authMode === 'reset') {
+        alert("Password updated! You can now login with your new password.");
+        setAuthMode('login');
+        setFormData({ ...formData, password: '' });
+        navigate('/login'); // Clean URL
       }
 
     } catch (err) {
-      console.error("API Error:", err);
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -103,142 +111,71 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-gray-50 p-4 font-sans">
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden min-h-[600px]">
         
-        {/* LEFT PANEL - Decorative/Branding */}
-        <div className="relative md:w-5/12 bg-gradient-to-br from-red-500 to-red-800 text-white p-10 flex flex-col justify-center items-center text-center overflow-hidden transition-all duration-500">
-          <div className="absolute top-[-20%] left-[-20%] w-64 h-64 bg-white opacity-10 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-48 h-48 bg-white opacity-10 rounded-full blur-xl"></div>
-          
-          <div className="relative z-10">
-            <h2 className="text-4xl font-bold mb-4">
-              {isLogin ? "Welcome Back!" : "Hello, Traveler!"}
-            </h2>
-            <p className="text-red-100 mb-8 leading-relaxed">
-              {isLogin 
-                ? "To keep connected with us please login with your personal info and manage your bookings."
-                : "Enter your personal details and start your journey with the best bus booking experience."}
-            </p>
-            
-            <div className="mt-8">
-              <p className="text-sm text-red-200 mb-4">
-                {isLogin ? "Don't have an account yet?" : "Already have an account?"}
-              </p>
-              <button 
-                type="button"
-                onClick={toggleAuthMode}
-                className="px-8 py-3 border-2 border-white text-white rounded-full font-semibold tracking-wide hover:bg-white hover:text-red-600 transition-all duration-300 shadow-lg"
-              >
-                {isLogin ? "SIGN UP" : "SIGN IN"}
-              </button>
-            </div>
-          </div>
+        {/* LEFT PANEL */}
+        <div className="md:w-5/12 bg-gradient-to-br from-red-600 to-red-800 text-white p-10 flex flex-col justify-center items-center text-center">
+           <h2 className="text-4xl font-bold mb-4">
+             {authMode === 'reset' ? "Security First" : "Travel with Ease"}
+           </h2>
+           <p className="text-red-100 mb-8">
+             {authMode === 'forgot' ? "Don't worry, it happens to the best of us." : "Manage your bookings and explore new destinations."}
+           </p>
+           {authMode === 'login' && (
+             <button onClick={() => toggleMode('signup')} className="px-8 py-2 border-2 border-white rounded-full hover:bg-white hover:text-red-600 transition-all">SIGN UP</button>
+           )}
+           {(authMode === 'signup' || authMode === 'forgot' || authMode === 'reset') && (
+             <button onClick={() => toggleMode('login')} className="px-8 py-2 border-2 border-white rounded-full hover:bg-white hover:text-red-600 transition-all">BACK TO LOGIN</button>
+           )}
         </div>
 
-        {/* RIGHT PANEL - Forms */}
-        <div className="md:w-7/12 p-10 flex flex-col justify-center relative bg-white">
+        {/* RIGHT PANEL */}
+        <div className="md:w-7/12 p-10 flex flex-col justify-center bg-white relative">
+          <Link to="/" className="absolute top-6 right-8 text-gray-400">✕ Close</Link>
           
-          <Link to="/" className="absolute top-6 right-8 text-sm font-medium text-gray-400 hover:text-red-500 transition-colors">
-            ✕ Close
-          </Link>
-
           <div className="w-full max-w-sm mx-auto">
-            {/* Form Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                {isLogin ? "Sign in to BusBooking" : "Create an Account"}
-              </h2>
-              
-              <div className="mt-6 flex items-center justify-center space-x-2 text-gray-400">
-                <span className="h-px w-16 bg-gray-200"></span>
-                <span className="text-sm font-medium">use your email</span>
-                <span className="h-px w-16 bg-gray-200"></span>
-              </div>
-            </div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+              {authMode === 'login' && "Sign In"}
+              {authMode === 'signup' && "Create Account"}
+              {authMode === 'forgot' && "Forgot Password"}
+              {authMode === 'reset' && "Set New Password"}
+            </h2>
 
-            {/* Error Message Display */}
-            {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg text-center animate-pulse">
-                {error}
-              </div>
-            )}
+            {error && <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm text-center">{error}</div>}
+            {successMsg && <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-lg text-sm text-center">{successMsg}</div>}
 
-            {/* Main Form */}
-            <form onSubmit={handleAuth} className="space-y-4 animate-fade-in">
+            <form onSubmit={handleAuth} className="space-y-4">
+              {authMode === 'signup' && (
+                <input type="text" name="name" onChange={handleChange} placeholder="Full Name" required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
+              )}
               
-              {/* Name (Only visible when Registering) */}
-              {!isLogin && (
-                <input 
-                  type="text" 
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Full Name" 
-                  required={!isLogin}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
-                />
+              {(authMode !== 'reset') && (
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
               )}
 
-              <input 
-                type="email" 
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email Address" 
-                required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
-              />
-              
-              <input 
-                type="password" 
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password" 
-                required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
-              />
+              {(authMode === 'login' || authMode === 'signup' || authMode === 'reset') && (
+                <input type="password" name="password" onChange={handleChange} placeholder={authMode === 'reset' ? "New Password" : "Password"} required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
+              )}
 
-              {/* Extras for Login Mode */}
-              {isLogin && (
-                <div className="flex justify-between items-center mt-2 text-sm">
-                  <label className="flex items-center text-gray-500 cursor-pointer">
-                    <input type="checkbox" className="mr-2 rounded text-red-500 focus:ring-red-500" />
-                    Remember me
-                  </label>
-                  <a href="#" className="text-red-500 font-medium hover:underline">Forgot password?</a>
+              {authMode === 'reset' && (
+                <input type="password" name="confirmPassword" onChange={handleChange} placeholder="Confirm New Password" required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
+              )}
+
+              {authMode === 'login' && (
+                <div className="text-right">
+                  <button type="button" onClick={() => toggleMode('forgot')} className="text-red-500 text-sm hover:underline">Forgot password?</button>
                 </div>
               )}
 
-              {/* Submit Button */}
-              <button 
-                type="submit" 
-                disabled={isLoading}
-                className="w-full mt-4 bg-red-500 hover:bg-red-600 disabled:bg-red-300 text-white font-bold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex justify-center items-center"
-              >
-                {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                ) : (
-                  isLogin ? "Sign In" : "Create Account"
+              <button disabled={isLoading} className="w-full bg-red-500 text-white font-bold py-3 rounded-lg hover:bg-red-600 transition-all">
+                {isLoading ? "Processing..." : (
+                  authMode === 'login' ? "Sign In" : 
+                  authMode === 'signup' ? "Register" : 
+                  authMode === 'forgot' ? "Send Reset Link" : "Update Password"
                 )}
               </button>
             </form>
-
-            {/* Mobile Toggle */}
-            <div className="mt-8 text-center md:hidden">
-               <p className="text-gray-600">
-                 {isLogin ? "Don't have an account?" : "Already have an account?"}
-               </p>
-               <button 
-                 type="button"
-                 onClick={toggleAuthMode}
-                 className="mt-2 text-red-600 font-bold hover:underline"
-               >
-                 {isLogin ? "Sign Up here" : "Sign In here"}
-               </button>
-            </div>
-
           </div>
         </div>
       </div>

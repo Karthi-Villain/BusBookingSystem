@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CreditCard, Smartphone, CheckCircle, ShieldCheck, Loader2 } from 'lucide-react';
+import { CheckCircle, ShieldCheck, Loader2, CreditCard } from 'lucide-react';
 import api from '../services/api';
+
+// Utility to load the Razorpay SDK script dynamically
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { bookingPayload } = location.state || {};
   
-  const [paymentMethod, setPaymentMethod] = useState('upi');
   const [status, setStatus] = useState('idle'); // idle, processing, success, error
 
   // Kick back if accessed directly without payload
@@ -20,36 +30,88 @@ const Payment = () => {
     );
   }
 
-  const handleSimulatePayment = async () => {
+  const handleRazorpayPayment = async () => {
     setStatus('processing');
+    
+    const res = await loadRazorpayScript();
 
-    // Simulate network delay / bank processing (2 seconds)
-    setTimeout(async () => {
-      try {
-        // Fire the ACTUAL booking API call now that payment "succeeded"
-        const payloadForApi = {
-          busId: bookingPayload.busId,
-          date: bookingPayload.date,
-          source: bookingPayload.source,
-          destination: bookingPayload.destination,
-          seats: bookingPayload.seats,
-          passengers: bookingPayload.passengers
-        };
-        
-        const res = await api.post("/book", payloadForApi);
-        
-        setStatus('success');
-        
-        // Show success animation for 2 seconds, then redirect to bookings
-        setTimeout(() => {
-          navigate("/my-bookings", { state: { newPnr: res.data.pnr } });
-        }, 2000);
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      setStatus('error');
+      return;
+    }
 
-      } catch (err) {
-        setStatus('error');
-        console.error("Booking API Error:", err);
+    /* NOTE: In a full production setup, you should generate an `order_id` 
+      from your backend first using Razorpay's server SDK and pass it below.
+      For test mode / frontend-only integration, you can omit it.
+    */
+    
+    const options = {
+      key: import.meta.env.VITE_RAZOR_KEY, // <-- REPLACE WITH YOUR TEST KEY
+      amount: bookingPayload.totalFare * 100, // Razorpay expects amount in paise (₹1 = 100 paise)
+      currency: "INR",
+      name: "Bus Booking Service",
+      description: `Tickets: ${bookingPayload.source} to ${bookingPayload.destination}`,
+      
+      handler: async function (response) {
+        // This function triggers upon successful payment in Razorpay
+        try {
+          const payloadForApi = {
+            busId: bookingPayload.busId,
+            date: bookingPayload.date,
+            source: bookingPayload.source,
+            destination: bookingPayload.destination,
+            seats: bookingPayload.seats,
+            passengers: bookingPayload.passengers,
+            paymentId: response.razorpay_payment_id // Pass ID to backend for verification if needed
+          };
+          
+          const apiRes = await api.post("/book", payloadForApi);
+          
+          setStatus('success');
+          
+          // Show success animation for 2 seconds, then redirect to bookings
+          setTimeout(() => {
+            navigate("/my-bookings", { state: { newPnr: apiRes.data?.pnr } });
+          }, 2000);
+
+        } catch (err) {
+          console.error("Booking API Error after payment:", err);
+          setStatus('error');
+          setTimeout(() => navigate(-1), 2000);
+        }
+      },
+      prefill: {
+        name: bookingPayload.passengers?.[0]?.name || "Test User",
+        email: "testuser@example.com",
+        contact: "9999999999",
+      },
+      theme: {
+        color: "#e11d48", // Tailwind 'rose-600' to match your primary theme
+      },
+      modal: {
+        ondismiss: function() {
+          // Triggered when user closes the payment popup without paying
+          setStatus('error');
+          setTimeout(() => {
+            navigate(-1); // Navigates back to the previous URL
+          }, 2000);
+        }
       }
-    }, 2000);
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    
+    // Explicit failure handler
+    paymentObject.on('payment.failed', function (response) {
+      console.error("Payment Failed:", response.error);
+      setStatus('error');
+      setTimeout(() => {
+        navigate(-1); // Navigates back to the previous URL
+      }, 2000);
+    });
+
+    paymentObject.open();
   };
 
   if (status === 'success') {
@@ -72,79 +134,37 @@ const Payment = () => {
     <div className="min-h-screen bg-gray-50 py-10 px-4 font-sans">
       <div className="max-w-3xl mx-auto flex flex-col md:flex-row gap-6">
         
-        {/* Payment Selection */}
-        <div className="w-full md:w-2/3 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-6">Select Payment Method</h2>
-          
-          <div className="space-y-4 mb-8">
-            {/* UPI Option */}
-            <label className={`flex items-center p-4 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'upi' ? 'border-primary bg-rose-50 ring-1 ring-primary' : 'border-gray-200 hover:bg-gray-50'}`}>
-              <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={(e) => setPaymentMethod(e.target.value)} className="hidden" />
-              <Smartphone size={24} className={paymentMethod === 'upi' ? 'text-primary' : 'text-gray-400'} />
-              <div className="ml-4">
-                <p className="font-bold text-gray-800">UPI / QR Code</p>
-                <p className="text-xs text-gray-500">Google Pay, PhonePe, Paytm</p>
-              </div>
-            </label>
-
-            {/* Card Option */}
-            <label className={`flex items-center p-4 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'card' ? 'border-primary bg-rose-50 ring-1 ring-primary' : 'border-gray-200 hover:bg-gray-50'}`}>
-              <input type="radio" name="payment" value="card" checked={paymentMethod === 'card'} onChange={(e) => setPaymentMethod(e.target.value)} className="hidden" />
-              <CreditCard size={24} className={paymentMethod === 'card' ? 'text-primary' : 'text-gray-400'} />
-              <div className="ml-4">
-                <p className="font-bold text-gray-800">Credit / Debit Card</p>
-                <p className="text-xs text-gray-500">Visa, MasterCard, RuPay</p>
-              </div>
-            </label>
-          </div>
-
-          {/* Mock Input Fields based on selection */}
-          <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6">
-            {paymentMethod === 'upi' ? (
-              <div>
-                <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">UPI ID</label>
-                <input type="text" defaultValue="mockuser@okhdfc" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white" readOnly />
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Card Number</label>
-                  <input type="text" defaultValue="**** **** **** 4242" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white" readOnly />
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-1/2">
-                    <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">Expiry</label>
-                    <input type="text" defaultValue="12/26" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white" readOnly />
-                  </div>
-                  <div className="w-1/2">
-                    <label className="text-xs font-bold text-gray-500 uppercase mb-1 block">CVV</label>
-                    <input type="password" defaultValue="***" className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white" readOnly />
-                  </div>
-                </div>
-              </div>
-            )}
+        {/* Payment Action Panel */}
+        <div className="w-full md:w-2/3 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col justify-center">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-rose-50 text-primary rounded-full mb-4">
+              <CreditCard size={32} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Complete Your Booking</h2>
+            <p className="text-gray-500">You will be redirected to Razorpay's secure checkout to complete your transaction.</p>
           </div>
 
           {status === 'error' && (
-            <div className="mb-4 text-red-500 text-sm text-center font-medium bg-red-50 py-2 rounded-lg">
-              Booking failed. Please try again.
+            <div className="mb-6 text-red-600 text-sm text-center font-medium bg-red-50 py-3 px-4 rounded-xl flex flex-col items-center">
+              <span>Payment was not successful or was cancelled.</span>
+              <span className="text-xs text-red-400 mt-1">Redirecting you back...</span>
             </div>
           )}
 
           <button 
-            onClick={handleSimulatePayment}
-            disabled={status === 'processing'}
-            className="w-full bg-primary hover:bg-rose-700 text-white font-bold py-4 rounded-xl transition shadow-md flex items-center justify-center gap-2"
+            onClick={handleRazorpayPayment}
+            disabled={status === 'processing' || status === 'error'}
+            className="w-full bg-primary hover:bg-rose-700 text-white font-bold py-4 rounded-xl transition shadow-md flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {status === 'processing' ? (
-              <><Loader2 size={20} className="animate-spin" /> Processing Payment...</>
+              <><Loader2 size={20} className="animate-spin" /> Connecting to Gateway...</>
             ) : (
-              <>Pay ₹{bookingPayload.totalFare}</>
+              <>Pay Securely — ₹{bookingPayload.totalFare}</>
             )}
           </button>
           
-          <div className="mt-4 flex items-center justify-center gap-1 text-xs text-gray-400">
-            <ShieldCheck size={14} /> This is a secure mock payment environment
+          <div className="mt-6 flex items-center justify-center gap-1 text-xs text-gray-400">
+            <ShieldCheck size={16} /> 100% Secure Payment via Razorpay
           </div>
         </div>
 
