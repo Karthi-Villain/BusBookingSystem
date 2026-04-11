@@ -160,7 +160,7 @@ def send_email_async(recipient, subject, html_content):
     thread = threading.Thread(target=_send_email_task, args=(recipient, subject, html_content))
     thread.start()
 
-def get_welcome_email(user_name):
+def get_welcome_email(user_name, app_url):
     return f"""
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; padding: 40px 20px; color: #1e293b;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
@@ -186,7 +186,7 @@ def get_welcome_email(user_name):
                 </div>
 
                 <div style="text-align: center; margin: 35px 0;">
-                    <a href="http://localhost:5173" style="background-color: #ef4444; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">Book Your First Trip</a>
+                    <a href="{app_url}" style="background-color: #ef4444; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">Book Your First Trip</a>
                 </div>
                 
                 <p style="font-size: 14px; color: #64748b; text-align: center;">Need help getting started? Just reply to this email.</p>

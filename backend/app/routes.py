@@ -322,7 +322,7 @@ def register():
     db.session.commit()
 
     # TRIGGER WELCOME EMAIL IN BACKGROUND
-    html_content = get_welcome_email(user.name)
+    html_content = get_welcome_email(user.name, os.environ.get('VITE_FRONTEND_URL','http://localhost:5173'))
     send_email_async(user.email, "Welcome to BusBooking!", html_content)
 
     return jsonify({"message": "User registered"})

@@ -74,29 +74,27 @@ const MyBookings = () => {
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
 
-  // Logic to determine if a ticket is still active (journey time + 30 mins has not passed)
-  const isJourneyValid = (bookingDateStr, boardingTimeStr) => {
-    if (!bookingDateStr || !boardingTimeStr) return true; // Default to valid if data is missing
+  // CORRECTED LOGIC: Add 1 day to the date, check dropping time + 30 mins
+  const isJourneyValid = (bookingDateStr, droppingTimeStr) => {
+    if (!bookingDateStr || !droppingTimeStr) return true; // Default to valid if data is missing
     
-    // Create Date object for the journey day
     const journeyDate = new Date(bookingDateStr);
     
-    // Parse time (e.g., "20:30")
-    const [hours, minutes] = boardingTimeStr.split(':').map(Number);
+    journeyDate.setDate(journeyDate.getDate() + 1);
     
-    // Set exact hours and minutes
+    const [hours, minutes] = droppingTimeStr.split(':').map(Number);
+    
     journeyDate.setHours(hours || 0, minutes || 0, 0, 0);
 
-    // Add 30 minutes grace period to the departure time
     const expiryTime = new Date(journeyDate.getTime() + 30 * 60000);
     const now = new Date();
 
     return now <= expiryTime;
   };
 
-  // Split bookings into Active and Past
-  const activeBookings = bookings.filter(b => isJourneyValid(b.date, b.boardingTime));
-  const pastBookings = bookings.filter(b => !isJourneyValid(b.date, b.boardingTime));
+  // Split bookings into Active and Past based on the corrected logic
+  const activeBookings = bookings.filter(b => isJourneyValid(b.date, b.droppingTime));
+  const pastBookings = bookings.filter(b => !isJourneyValid(b.date, b.droppingTime));
 
   // Animation Variants
   const containerVariants = {
