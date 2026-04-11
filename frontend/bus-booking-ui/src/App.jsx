@@ -9,6 +9,8 @@ import MyBookings from "./pages/MyBookings";
 import AuthPage from "./pages/AuthPage";
 import MyProfile from './pages/MyProfile';
 import Payment from './pages/Payment';
+import AboutProject from './pages/AboutProject';
+
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
             <Route path="/my-bookings" element={<MyBookings />} />
             <Route path="/login" element={<AuthPage />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/about-project" element={<AboutProject />} />
           </Routes>
         </main>
         <Footer />

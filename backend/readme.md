@@ -1,263 +1,290 @@
-API summary:
+<div align="center">
 
-Purpose: basic end-to-end validation of a bus booking API
-Collection variable:
-API_URL — base URL used by most requests
-Coverage areas:
-service health
-bus search
-bus details
-seat layout
-user registration and login
-booking creation
-booking retrieval
-Endpoint overview
+# ⚙️ BusBooking — Backend API
 
-Server Live Status
-Method: GET
-URL: {{API_URL}}
-Purpose: health check for the API server
-Expected success response:
-{    "message": "API working"}
-Validations included:
-status is 200
-response contains message
-message === "API working"
-response time under 2000ms
-Use case:
+[![Flask](https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-FB015B?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io)
 
-Run this first before any workflow to confirm the backend is reachable.
-Search for a Bus Booking
-Method: GET
-URL:
-{{API_URL}}/search?    source=Hyderabad&    destination=Pune&    date=2026-04-10
-Query params:
-source
-destination
-date
-Purpose: search available buses for a route and journey date
-Pre-request validation:
+**RESTful API powering the BusBooking platform — built with Flask, SQLAlchemy & MySQL.**
 
-checks source exists
-checks destination exists
-checks date exists
-checks date format is YYYY-MM-DD
-checks date is in the future
-Observed response shape:
+</div>
 
-{    "data": [        {            "availableSeats":                 5,            "boardingTime":                 "2026-04-10                 21:15",            "busId":                 "44592685",            "busType": "A/C                 Sleeper (2+1)                ",            "droppingTime":                 "2026-04-11                 08:30",            "duration": "11h                 15m",            "isAC": true,            "price": 649.0,            "rating": 4.7,            "travelsName":                 "VSR Tours                 and Travels"        }    ]}
-Validations included:
-status is 200
-response has data
-data is a non-empty array
-each item includes required fields
-price > 0
-availableSeats is a non-negative integer
-rating is between 0 and 5
-response time under 3000ms
-Use case:
+---
 
-Starting point for the booking flow. Use the returned busId to fetch details and seats.
-Get Bus Details
-Method: GET
-URL:
-{{API_URL}}/bus/44592685
-Purpose: fetch detailed information for one bus
-Observed response shape:
+## 📋 Table of Contents
 
-{    "boardingTime": "21:15",    "busId": "44592685",    "busType": "A/C Sleeper (2        +1)",    "droppingTime": "08:30",    "duration": "11h 15m",    "isAC": true,    "price": 649.0,    "rating": 4.7,    "totalSeats": 18,    "travelsName": "VSR Tours         and Travels"}
-Validations included:
-status is 200
-required fields are present
-field types are correct
-price > 0
-rating between 0 and 5
-totalSeats > 0
-time format check for boardingTime and droppingTime
-response time under 500ms
-Variables saved for later use:
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Database Setup](#-database-setup)
+- [Running the Server](#-running-the-server)
+- [API Endpoints](#-api-endpoints)
+- [Project Structure](#-project-structure)
+- [Key Implementation Details](#-key-implementation-details)
+- [Troubleshooting](#-troubleshooting)
 
-selectedBusPrice
-selectedBusType
-Use case:
+---
 
-Confirms the selected bus metadata before choosing seats or booking.
-Get Selected Bus Seats
-Method: GET
-URL:
-{{API_URL}}/bus/44592685/    seats?source=Hyderabad&    destination=Pune&    date=2026-04-10
-Query params:
-source
-destination
-date
-Purpose: fetch seat map for a selected bus on a route/date
-Observed response shape:
+## 📦 Prerequisites
 
-{    "busId": "44592685",    "lowerDeck": [        [            {                "seatNo":                     "L1",                "available":                     true,                "price": 649.                    0,                "type":                     "SEATER"            },            {                "seatNo":                     "L2",                "available":                     true,                "price": 849.                    0,                "type":                     "SLEEPER"            },            null,            {                "seatNo":                     "L3",                "available":                     true,                "price": 849.                    0,                "type":                     "SLEEPER"            }        ]    ],    "upperDeck": [        [            {                "seatNo":                     "U1",                "available":                     true,                "price": 949.                    0,                "type":                     "SLEEPER"            },            {                "seatNo":                     "U2",                "available":                     true,                "price": 949.                    0,                "type":                     "SLEEPER"            },            null,            {                "seatNo":                     "U3",                "available":                     true,                "price": 949.                    0,                "type":                     "SLEEPER"            }        ]    ]}
-Validations included:
-status is 200
-response contains busId, lowerDeck, upperDeck
-each deck is an array
-each row has at most 4 columns
-each non-null seat has:
-seatNo
-available
-price
-type
-each seat price > 0
-all upper deck seats are SLEEPER
-walkway position is represented by null in the middle
-Pre-request script:
-sets todayDate using moment
-Variable saved:
-totalSeats
-Use case:
+| Requirement | Version |
+|-------------|---------|
+| Python | ≥ 3.10 |
+| pip | ≥ 22.0 |
+| MySQL Server | ≥ 8.0 |
+| Git | ≥ 2.x |
 
-Used to inspect seat availability and choose valid seats for booking.
-User Register JWT
-Actual method from tab details: POST
-URL:
-{{API_URL}}/auth/register
-Purpose: create a new user account
-Sample request body:
+---
 
-{    "name": "Shin Chan",    "email": "gigace545@choco.        la",    "password": "Pass1234"}
-Observed response:
+## 🚀 Installation
 
-{    "message": "User         registered"}
-Notes:
+```bash
+# Clone the repository
+git clone https://github.com/Karthi-Villain/BusBookingSystem.git
+cd BusBookingSystem/backend
 
-In the collection summary this request appeared as GET, but the open request details show it is actually POST. The tab details are the reliable source here.
-Use case:
+# Create a virtual environment
+python -m venv venv
 
-First step for authenticated booking scenarios.
-User Login JWT
-Actual method from tab details: POST
-URL:
-{{API_URL}}/auth/login
-Purpose: authenticate user and obtain JWT token
-Sample request body:
+# Activate virtual environment
+# macOS / Linux:
+source venv/bin/activate
+# Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+# Windows (CMD):
+venv\Scripts\activate.bat
 
-{    "name": "Shin Chan",    "email": "gigace545@choco.        la",    "password": "Pass1234"}
-Observed response:
+# Install dependencies
+pip install -r requirements.txt
+```
 
-{    "token": "JWT_TOKEN",    "userId": 2}
-Use case:
+### Dependencies (`requirements.txt`)
 
-Provides bearer token required by protected booking endpoints.
-Important note:
+```
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Flask-JWT-Extended==4.6.0
+Flask-Mail==0.9.1
+Flask-CORS==4.0.0
+PyMySQL==1.1.0
+razorpay==1.4.1
+python-dotenv==1.0.0
+Werkzeug==3.0.1
+```
 
-The token is currently hardcoded into later requests instead of being dynamically reused from login.
-Booking
-Method: POST
-URL:
-{{API_URL}}/book
-Purpose: create a booking for selected seats
-Auth required:
-Authorization: Bearer <JWT>
-Sample request body:
+---
 
-{    "busId": "{{busId}}",    "date": "{{journeyDate}}",    "source": "Hyderabad",    "destination": "Pune",    "seats": [        "{{seat1}}",        "{{seat2}}"    ],    "passengers": [        {            "name": "{{p1}}",            "age": 24,            "gender": "M",            "seatNo": "                {{seat1}}"        },        {            "name": "{{p2}}",            "age": 23,            "gender": "M",            "seatNo": "                {{seat2}}"        }    ]}
-Pre-request script sets:
+## 🗄️ Database Setup
 
-busId = 44592685
-journeyDate = 2026-04-10
-seat1 = L5
-seat2 = L6
-p1 = Naveen
-p2 = Kumar
-Observed response:
+```bash
+# 1. Login to MySQL
+mysql -u root -p
 
-{    "message": "Booking         confirmed",    "pnr": "PNR195706",    "totalAmount": 1498.0}
-Validations included:
+# 2. Create the database
+CREATE DATABASE busbooking CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-status is 200
-response contains message, pnr, totalAmount
-success message equals Booking confirmed
-pnr format matches PNR + 6 digits
-totalAmount > 0
-number of passengers matches seat count
-no duplicate seats in request
-response time under 1s
-Variable saved:
+# 3. Exit MySQL
+EXIT;
 
-lastPNR
-Use case:
+# 4. Initialize tables (Flask auto-creates via SQLAlchemy)
+python -c "from app import app, db; app.app_context().push(); db.create_all(); print('✅ Tables created')"
+```
 
-Core transaction endpoint that converts search + seat selection into a confirmed booking.
-Get All Bookings
-Actual method from tab details: POST
-URL:
-{{API_URL}}/my-bookings
-Purpose: retrieve bookings for the authenticated user
-Auth required:
-Authorization: Bearer <JWT>
-Observed response shape:
+### Schema Overview
 
-{    "data": [        {            "amount": 1698.0,            "busId":                 "44592685",            "date":                 "2026-04-10",            "destination":                 "Pune",            "passengers": [                {                    "age": 24,                    "gender":                         "M",                    "name":                         "Navee                        n",                    "seatNo":                         "L3"                }            ],            "pnr":                 "PNR138838",            "route":                 "Hyderabad →                 Pune",            "source":                 "Hyderabad"        }    ]}
-Validations included:
+```
+┌──────────┐    ┌──────────┐    ┌──────────┐
+│  users   │    │  routes  │    │route_stops│
+│──────────│    │──────────│    │──────────-│
+│ id (PK)  │    │ id (PK)  │◄───│ route_id  │
+│ name     │    │ origin   │    │ stop_name │
+│ email    │    │ dest     │    │ stop_order│
+│ pass_hash│    │ distance │    │ km_from.. │
+│ gender   │    └────┬─────┘    └───────────┘
+│ role     │         │
+└────┬─────┘    ┌────▼─────┐
+     │          │  buses   │
+     │          │──────────│
+     │          │ id (PK)  │
+     │          │ route_id │
+     │          │ name     │
+     │          │ bus_type │
+     │          │ price/km │
+     │          └────┬─────┘
+     │               │
+     │          ┌────▼─────┐    ┌───────────┐
+     │          │  seats   │    │passengers │
+     │          │──────────│    │───────────│
+     │          │ id (PK)  │◄───│ seat_id   │
+     │          │ bus_id   │    │ booking_id│
+     │          │ seat_no  │    │ name      │
+     │          │ is_booked│    │ age       │
+     │          └──────────┘    │ gender    │
+     │                          └─────┬─────┘
+     │          ┌─────────────────────┘
+     │     ┌────▼──────┐
+     └────►│ bookings  │
+           │───────────│
+           │ id (PK)   │
+           │ user_id   │
+           │ bus_id    │
+           │ total_amt │
+           │ status    │
+           │ razorpay  │
+           └───────────┘
+```
 
-status is 200
-response time under 2000ms
-response body is valid JSON
-top-level data exists and is an array
-each booking item contains:
-amount
-busId
-date
-destination
-pnr
-route
-source
-field types are validated
-route string formatting is validated
-Notes:
+---
 
-In the collection summary this request appeared as GET, but the active tab shows it is actually POST.
-Use case:
+## ▶️ Running the Server
 
-Final verification endpoint for the booking lifecycle.
-Suggested API flow in this collection
+```bash
+# Development mode (with auto-reload)
+flask run --port 5000 --debug
 
-A typical end-to-end flow is:
+# Or directly with Python
+python app.py
+```
 
-Server Live Status
-User Register JWT
-User Login JWT
-Search for a Bus Booking
-Get Bus Details
-Get Selected Bus Seats
-Booking
-Get All Bookings
-Functional grouping
+The API will be available at **`http://localhost:5000`**
 
-Authentication
+### Verify it's running:
 
-User Register JWT
-User Login JWT
-Discovery
+```bash
+curl http://localhost:5000/api/health
+# Expected: {"status": "ok", "message": "BusBooking API is running"}
+```
 
-Search for a Bus Booking
-Get Bus Details
-Get Selected Bus Seats
-Transaction
+---
 
-Booking
-Verification / history
+## 📡 API Endpoints
 
-Get All Bookings
-Health
+### 🔐 Authentication
 
-Server Live Status
-Important observations about the collection
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-Some request metadata in the collection listing looks stale:
-User Register JWT
- is actually POST
-User Login JWT
- is actually POST
-Get All Bookings
- is actually POST
-Auth tokens are hardcoded in protected requests instead of being passed dynamically from login.
-Several requests are unsaved/dirty in tabs, which may mean the open tab content is newer than the saved collection version.
-The collection has strong test coverage for response structure and performance, especially on search, bus details, seats, booking, and bookings retrieval.
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepass123",
+  "gender": "male"
+}
+```
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "securepass123"
+}
+# Returns: { "access_token": "eyJhbG..." }
+```
+
+### 🗺️ Routes & Buses
+
+```http
+GET /api/routes/search?from=Chennai&to=Bangalore&date=2025-01-15
+
+GET /api/buses/{bus_id}/seats
+Authorization: Bearer <token>
+```
+
+### 📝 Bookings
+
+```http
+POST /api/bookings
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "bus_id": 1,
+  "boarding_point": "Chennai Central",
+  "dropping_point": "Bangalore Majestic",
+  "passengers": [
+    { "seat_id": 5, "name": "John", "age": 28, "gender": "male" }
+  ]
+}
+```
+
+### 💳 Payments
+
+```http
+POST /api/payment/create-order
+Authorization: Bearer <token>
+{ "booking_id": 42 }
+
+POST /api/payment/verify
+Authorization: Bearer <token>
+{
+  "razorpay_order_id": "order_xxx",
+  "razorpay_payment_id": "pay_xxx",
+  "razorpay_signature": "sig_xxx"
+}
+```
+
+---
+
+## 📂 Project Structure
+
+```
+backend/
+├── app.py                 # Application entry point & factory
+├── config.py              # Configuration loader (reads .env)
+├── models.py              # SQLAlchemy ORM models
+│   ├── User               # Auth & profile
+│   ├── Route              # Origin-destination pairs
+│   ├── RouteStop           # Intermediate stops
+│   ├── Bus                # Bus details & pricing
+│   ├── Seat               # Seat map & status
+│   ├── Booking            # Reservation records
+│   └── Passenger          # Traveller details
+├── routes.py              # All API endpoint handlers
+├── requirements.txt       # Python dependencies
+├── .env.example           # Environment variable template
+└── .gitignore
+```
+
+---
+
+## 🔑 Key Implementation Details
+
+### Lazy Seat Generation
+Seats are created on first request via `get_or_create_seats()` — no manual seeding required.
+
+### Gender-Based Seating Rules
+`apply_gender_rules()` enforces adjacency policies: a female passenger won't be placed next to a male stranger.
+
+### Payment Flow
+1. Client calls `/payment/create-order` → Razorpay order created
+2. Client completes payment via Razorpay checkout
+3. Client sends signature to `/payment/verify` → server verifies HMAC
+4. Booking status updated to `confirmed`
+
+### Async Email Notifications
+Booking confirmations are dispatched asynchronously using Python `threading` to avoid blocking the response.
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `ModuleNotFoundError` | Ensure venv is activated: `source venv/bin/activate` |
+| `Access denied for user` | Check `DB_USER` and `DB_PASSWORD` in `.env` |
+| `Can't connect to MySQL` | Verify MySQL is running: `sudo systemctl status mysql` |
+| CORS errors | Ensure `Flask-CORS` is installed and `CORS(app)` is called |
+| JWT token expired | Default expiry is 24h — re-login to get a fresh token |
+
+---
+
+<div align="center">
+
+**🔧 Backend crafted with Flask & ❤️**
+
+</div>

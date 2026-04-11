@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Ticket, User, LogOut, ChevronDown, 
+  FileText, BusFront, Settings
+} from "lucide-react";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -9,7 +14,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
-  // Helper function to check localStorage
   const checkAuth = () => {
     const token = localStorage.getItem('authToken');
     const storedName = localStorage.getItem('userName') || "Traveler"; 
@@ -24,13 +28,9 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // 1. Check session on component mount
     checkAuth();
-
-    // 2. Listen for custom login/logout events from other components
     window.addEventListener('authStateChange', checkAuth);
 
-    // 3. Handle closing the dropdown when clicking outside of it
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
@@ -39,7 +39,6 @@ const Navbar = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
     
-    // Cleanup listeners on unmount
     return () => {
       window.removeEventListener('authStateChange', checkAuth);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -47,81 +46,128 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Clear all session data
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     localStorage.removeItem('userEmail');
     
-    // Close dropdown
     setIsDropdownOpen(false);
-    
-    // Dispatch the custom event to update Navbar state instantly
     window.dispatchEvent(new Event('authStateChange'));
-    
-    // Redirect to home page
     navigate('/');
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md py-4 px-6 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold text-red-600">
-        BusBooking
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-slate-100 py-4 px-6 flex justify-between items-center transition-all duration-300">
+      
+      {/* Brand Logo */}
+      <Link to="/" className="flex items-center gap-2 group">
+        <div className="bg-red-600 text-white p-2 rounded-xl group-hover:scale-105 transition-transform shadow-md shadow-red-600/20">
+          <BusFront size={24} />
+        </div>
+        <span className="text-2xl font-black text-slate-900 tracking-tight">
+          Bus<span className="text-red-600">Booking</span>
+        </span>
       </Link>
-      <div className="space-x-6 flex items-center">
-        <Link to="/my-bookings" className="text-gray-600 hover:text-red-600 font-medium transition-colors">
+
+      {/* Navigation Links */}
+      <div className="flex items-center space-x-2 md:space-x-4 text-sm font-bold text-slate-600">
+        
+        {/* NEW: About Project Button */}
+        <Link 
+          to="/about-project" 
+          className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-xl hover:bg-slate-50 hover:text-red-600 transition-colors"
+        >
+          <FileText size={16} className="text-slate-400" />
+          About Project
+        </Link>
+
+        {/* My Bookings */}
+        <Link 
+          to="/my-bookings" 
+          className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-xl hover:bg-slate-50 hover:text-red-600 transition-colors"
+        >
+          <Ticket size={16} className="text-slate-400" />
           My Bookings
         </Link>
+
+        {/* Divider */}
+        <div className="w-px h-6 bg-slate-200 mx-2 hidden md:block"></div>
         
+        {/* Auth State */}
         {isLoggedIn ? (
-          // Logged In State: User Dropdown Menu
           <div className="relative" ref={dropdownRef}>
             <button 
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center space-x-2 bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-lg font-medium transition-all hover:bg-red-100"
+              className="flex items-center space-x-2 bg-slate-50 text-slate-900 border border-slate-200 px-3 py-1.5 rounded-xl font-bold transition-all hover:border-red-200 hover:bg-red-50 hover:text-red-600 group"
             >
-              <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+              <div className="w-8 h-8 bg-red-600 text-white rounded-lg flex items-center justify-center text-sm font-black shadow-sm group-hover:scale-105 transition-transform">
                 {userName.charAt(0).toUpperCase()}
               </div>
-              <span>Hi! {userName}</span>
-              <svg 
-                className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
-                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
+              <span className="hidden sm:block">Hi! {userName}</span>
+              <ChevronDown 
+                size={16} 
+                className={`text-slate-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-red-600' : ''}`} 
+              />
             </button>
 
-            {/* Dropdown Content */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-lg shadow-xl overflow-hidden animate-fade-in">
-                <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-                  <p className="text-sm text-gray-500">Logged in as</p>
-                  <p className="text-sm font-bold text-gray-800 truncate">{userName}</p>
-                </div>
-                <Link 
-                  to="/my-profile" 
-                  onClick={() => setIsDropdownOpen(false)}
-                  className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 transition-colors"
+            {/* Dropdown Content with Framer Motion */}
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  className="absolute right-0 mt-3 w-56 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_40px_rgb(0,0,0,0.08)] overflow-hidden z-50 origin-top-right"
                 >
-                  My Profile
-                </Link>
-                <button 
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors border-t border-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+                  <div className="px-5 py-4 border-b border-slate-50 bg-slate-50/50">
+                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Logged in as</p>
+                    <p className="text-sm font-black text-slate-900 truncate">{userName}</p>
+                  </div>
+                  
+                  <div className="py-2">
+                    <Link 
+                      to="/my-bookings" 
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="md:hidden flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors"
+                    >
+                      <Ticket size={16} className="text-slate-400" /> My Bookings
+                    </Link>
+                    <Link 
+                      to="/about-project" 
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="md:hidden flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors"
+                    >
+                      <FileText size={16} className="text-slate-400" /> About Project
+                    </Link>
+                    <Link 
+                      to="/my-profile" 
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors"
+                    >
+                      <Settings size={16} className="text-slate-400" /> Account Settings
+                    </Link>
+                  </div>
+
+                  <div className="p-2 border-t border-slate-50">
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-xl font-bold transition-colors"
+                    >
+                      <LogOut size={16} /> Logout Securely
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         ) : (
-          // Logged Out State: Standard Button
           <Link 
             to="/login" 
-            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-lg font-medium transition-all shadow-md hover:shadow-lg"
+            className="flex items-center gap-2 bg-red-600 hover:bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md shadow-red-600/20 hover:shadow-slate-900/20 group"
           >
-            Login / Account
+            <User size={18} className="group-hover:scale-110 transition-transform"/> 
+            <span>Login / Account</span>
           </Link>
         )}
       </div>
