@@ -404,6 +404,8 @@ def my_bookings():
 
     for b in bookings:
         passengers = Passenger.query.filter_by(booking_id=b.id).all()
+        # Fetch the bus to get the exact boarding and dropping times
+        bus = Bus.query.filter_by(id=b.bus_id).first()
 
         result.append({
             "pnr": b.pnr,
@@ -413,6 +415,8 @@ def my_bookings():
             "amount": b.total_amount,
             "source": b.source,
             "destination": b.destination,
+            "boardingTime": bus.boarding_time if bus else "00:00",
+            "droppingTime": bus.dropping_time if bus else "00:00",
             "passengers": [
                 {
                     "name": p.name,

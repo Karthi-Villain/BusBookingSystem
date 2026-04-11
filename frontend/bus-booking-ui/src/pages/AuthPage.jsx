@@ -85,14 +85,20 @@ const AuthPage = () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || data.message || 'Operation failed');
 
-      // Success Logic
       if (authMode === 'login') {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userName', data.name);
         window.dispatchEvent(new Event('authStateChange'));
-        navigate('/');
+
+        const returnUrl = sessionStorage.getItem('returnUrl');
+        if (returnUrl) {
+          sessionStorage.removeItem('returnUrl'); // Clean up
+          navigate(returnUrl);
+        } else {
+          navigate('/');
+        }
       } else if (authMode === 'signup') {
-        setSuccessMsg("Registration successful! Please login.");
+        setSuccessMsg("Registration successful! Logging you in...");
         setAuthMode('login');
       } else if (authMode === 'forgot') {
         setSuccessMsg("Reset link sent! Please check your email inbox.");
@@ -100,7 +106,7 @@ const AuthPage = () => {
         alert("Password updated! You can now login with your new password.");
         setAuthMode('login');
         setFormData({ ...formData, password: '' });
-        navigate('/login'); // Clean URL
+        navigate('/auth'); 
       }
 
     } catch (err) {

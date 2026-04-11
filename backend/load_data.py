@@ -57,9 +57,8 @@ def load_route(json_file, source, destination):
                 bus_type=bus["bus_type"],
                 is_ac=bus["isAC"],
 
-                # 🔁 SWAPPED TIMES
-                boarding_time=bus["dropping_time"],
-                dropping_time=bus["boarding_time"],
+                boarding_time=bus["boarding_time"],
+                dropping_time=bus["dropping_time"],
 
                 duration=bus["duration"],
                 price=bus["price"],
