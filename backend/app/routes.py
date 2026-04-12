@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.models import db, Route, Bus, Seat, Booking, Passenger, User, RouteStop
 from datetime import datetime, timedelta
-import random, uuid, os, json, base64, re 
+import random, uuid, os, json, base64, re, time
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.utils import get_or_create_seats
@@ -490,6 +490,73 @@ def get_bus_images():
             "exterior": exterior_images,
             "interior": interior_images
         })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@api.route('/getFullDataWithIds', methods=['GET'])
+def get_full_data_with_ids():
+
+    try:
+        routes = Route.query.all()
+        result = []
+
+        for route in routes:
+            buses = Bus.query.filter_by(route_id=route.id).all()
+
+            boarding_points = RouteStop.query.filter_by(city=route.source).all()
+            dropping_points = RouteStop.query.filter_by(city=route.destination).all()
+
+            route_obj = {
+                "from": route.source,
+                "to": route.destination,
+                "buses": [],
+                "boarding_points": [],
+                "dropping_points": []
+            }
+
+            for b in buses:
+                route_obj["buses"].append({
+                    "busId": b.id,  
+                    "name": b.travels_name,
+                    "type": b.bus_type,
+                    "ac": b.is_ac,
+                    "departure": b.boarding_time,
+                    "arrival": b.dropping_time,
+                    "duration": b.duration,
+                    "price": b.price,
+                    "rating": b.rating
+                })
+
+            for bp in boarding_points:
+                route_obj["boarding_points"].append({
+                    "name": bp.stop_name,
+                    "address": bp.address
+                })
+
+            for dp in dropping_points:
+                route_obj["dropping_points"].append({
+                    "name": dp.stop_name,
+                    "address": dp.address
+                })
+
+            route_obj["faqs"] = [
+                {
+                    "faq": "What is the luggage policy?",
+                    "answer": "Each passenger is allowed 15kg luggage."
+                },
+                {
+                    "faq": "Can I cancel my ticket?",
+                    "answer": "Yes, cancellation allowed before departure."
+                }
+            ]
+
+            if route_obj["buses"]:
+                result.append(route_obj)
+
+
+        return jsonify(result)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { browserName, deviceType, osName } from 'react-device-detect';
+import { Eye, EyeOff } from 'lucide-react';
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -24,6 +25,10 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  
+  // States for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -42,15 +47,47 @@ const AuthPage = () => {
     setAuthMode(mode);
     setError(null);
     setSuccessMsg(null);
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear error dynamically as user types
+    if (error) setError(null);
+  };
+
+  const validateForm = () => {
+    // Email Validation Regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (authMode !== 'reset' && !emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address.");
+      return false;
+    }
+
+    // Password Length Validation
+    if ((authMode === 'login' || authMode === 'signup' || authMode === 'reset') && formData.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return false;
+    }
+
+    // Confirm Password Validation
+    if (authMode === 'reset' && formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return false;
+    }
+
+    return true;
   };
 
   const handleAuth = async (e) => {
-    const deviceDetails = `${browserName} on ${osName} (${deviceType})`;
     e.preventDefault();
+    
+    // Run frontend validation before making API calls
+    if (!validateForm()) return;
+
+    const deviceDetails = `${browserName} on ${osName} (${deviceType})`;
     setIsLoading(true);
     setError(null);
     setSuccessMsg(null);
@@ -161,11 +198,43 @@ const AuthPage = () => {
               )}
 
               {(authMode === 'login' || authMode === 'signup' || authMode === 'reset') && (
-                <input type="password" name="password" onChange={handleChange} placeholder={authMode === 'reset' ? "New Password" : "Password"} required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    name="password" 
+                    onChange={handleChange} 
+                    placeholder={authMode === 'reset' ? "New Password" : "Password"} 
+                    required 
+                    className="w-full px-4 py-3 bg-gray-50 border rounded-lg pr-12" 
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPassword(!showPassword)} 
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               )}
 
               {authMode === 'reset' && (
-                <input type="password" name="confirmPassword" onChange={handleChange} placeholder="Confirm New Password" required className="w-full px-4 py-3 bg-gray-50 border rounded-lg" />
+                <div className="relative">
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    name="confirmPassword" 
+                    onChange={handleChange} 
+                    placeholder="Confirm New Password" 
+                    required 
+                    className="w-full px-4 py-3 bg-gray-50 border rounded-lg pr-12" 
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               )}
 
               {authMode === 'login' && (

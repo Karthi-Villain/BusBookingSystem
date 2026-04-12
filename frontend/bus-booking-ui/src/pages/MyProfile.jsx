@@ -5,6 +5,7 @@ import {
   User, Mail, Ticket, LogOut, 
   ShieldCheck, Fingerprint, Camera, Edit3
 } from 'lucide-react';
+import Chatbot from "../components/Chatbot";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -187,6 +188,7 @@ const MyProfile = () => {
 
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };

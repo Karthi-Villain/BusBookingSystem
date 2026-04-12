@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking Bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-lg flex flex-col h-[600px]">
+        <div class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <span class="font-bold text-lg">AI Assistant</span>
+        </div>
+        
+        <div id="chat-box" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
+            <div class="self-start bg-gray-200 text-gray-800 p-3 rounded-lg max-w-[80%] whitespace-pre-wrap">Hello! I can help you find buses and answer questions. What are you looking for?</div>
+        </div>
+
+        <div class="p-4 border-t flex gap-2">
+            <input type="text" id="user-input" class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-600" placeholder="Type your message...">
+            <button id="send-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(text, isUser) {
+            const div = document.createElement('div');
+            div.className = isUser 
+                ? 'self-end bg-blue-600 text-white p-3 rounded-lg max-w-[80%] whitespace-pre-wrap'
+                : 'self-start bg-gray-200 text-gray-800 p-3 rounded-lg max-w-[80%] whitespace-pre-wrap';
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, true);
+            userInput.value = '';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'self-start bg-gray-200 text-gray-800 p-3 rounded-lg max-w-[80%] text-sm italic';
+            typingDiv.textContent = 'Typing...';
+            typingDiv.id = 'typing-indicator';
+            chatBox.appendChild(typingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: text })
+                });
+                
+                const data = await response.json();
+                document.getElementById('typing-indicator').remove();
+                
+                if (data.message) {
+                    addMessage(data.message, false);
+                }
+                
+                if (data.buses_found && data.buses_found.length > 0) {
+                    let busInfo = "Here are the buses I found:\n\n";
+                    data.buses_found.forEach(bus => {
+                        busInfo += `${bus.name} (${bus.type}) - ${bus.departure} - INR ${bus.price}\n`;
+                    });
+                    addMessage(busInfo, false);
+                }
+            } catch (error) {
+                document.getElementById('typing-indicator').remove();
+                addMessage("Connection error. Please try again.", false);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

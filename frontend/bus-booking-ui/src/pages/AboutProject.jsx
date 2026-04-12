@@ -4,6 +4,7 @@ import {
   FileText, Download, Code2, Layout, 
   Database, Zap, ShieldCheck, ExternalLink
 } from 'lucide-react';
+import Chatbot from "../components/Chatbot";
 
 const AboutProject = () => {
   // Document path in the public folder (Now pointing to the PDF)
@@ -145,6 +146,7 @@ const AboutProject = () => {
         </div>
 
       </div>
+      <Chatbot />
     </div>
   );
 };

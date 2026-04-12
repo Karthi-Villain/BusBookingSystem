@@ -8,6 +8,7 @@ import {
   Ticket, MapPin, Calendar, Download, XCircle, ArrowRight, 
   User, Armchair, AlertCircle, History, Map, Clock 
 } from "lucide-react";
+import Chatbot from "../components/Chatbot";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -388,6 +389,7 @@ const MyBookings = () => {
         )}
 
       </div>
+      <Chatbot />
     </div>
   );
 };

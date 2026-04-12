@@ -1,0 +1,1854 @@
+[
+    {
+        "from": "Nellore",
+        "to": "Hyderabad",
+        "buses": [
+            {
+                "name": "V Kaveri Travels",
+                "type": "Volvo 9600 Multi-Axle A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:00",
+                "arrival": "05:30",
+                "duration": "8h 30m",
+                "price": 1090.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Vikram Travels",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:00",
+                "arrival": "05:50",
+                "duration": "8h 50m",
+                "price": 739.0,
+                "rating": 4.4
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:30",
+                "arrival": "05:10",
+                "duration": "7h 40m",
+                "price": 959.0,
+                "rating": 4.6
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "23:35",
+                "arrival": "07:15",
+                "duration": "7h 40m",
+                "price": 655.0,
+                "rating": 4.3
+            },
+            {
+                "name": "Yolo Bus",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:45",
+                "arrival": "07:15",
+                "duration": "9h 30m",
+                "price": 739.0,
+                "rating": 4.5
+            },
+            {
+                "name": "AR & BCVR Travels",
+                "type": "Non A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "19:30",
+                "arrival": "06:00",
+                "duration": "10h 30m",
+                "price": 1100.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:00",
+                "arrival": "05:55",
+                "duration": "7h 55m",
+                "price": 589.0,
+                "rating": 4.4
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:15",
+                "arrival": "05:20",
+                "duration": "8h 5m",
+                "price": 629.0,
+                "rating": 4.5
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:05",
+                "arrival": "05:15",
+                "duration": "8h 10m",
+                "price": 725.0,
+                "rating": 4.7
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:05",
+                "arrival": "07:15",
+                "duration": "9h 10m",
+                "price": 691.0,
+                "rating": 4.3
+            },
+            {
+                "name": "zingbus Maxx",
+                "type": "Volvo 9600 Multi-Axle A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "23:50",
+                "arrival": "09:05",
+                "duration": "9h 15m",
+                "price": 934.0,
+                "rating": 4.7
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:50",
+                "arrival": "05:25",
+                "duration": "7h 35m",
+                "price": 649.0,
+                "rating": 4.5
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:40",
+                "arrival": "05:40",
+                "duration": "8h",
+                "price": 599.0,
+                "rating": 4.3
+            },
+            {
+                "name": "FlixBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:55",
+                "arrival": "07:10",
+                "duration": "10h 15m",
+                "price": 532.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:10",
+                "arrival": "06:25",
+                "duration": "8h 15m",
+                "price": 569.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Siri SmartBus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:45",
+                "arrival": "04:55",
+                "duration": "8h 10m",
+                "price": 790.0,
+                "rating": 4.5
+            },
+            {
+                "name": "FlixBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:25",
+                "arrival": "07:25",
+                "duration": "10h",
+                "price": 532.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:00",
+                "arrival": "04:50",
+                "duration": "7h 50m",
+                "price": 749.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Ramana Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:45",
+                "arrival": "06:45",
+                "duration": "8h",
+                "price": 711.0,
+                "rating": 4.4
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Ayyappa Gudi - Boarding Zone",
+                "address": "IntrCity Boarding Zone, SriKrishna Online Services, Ayyappa Gudi Center (Nellore)"
+            },
+            {
+                "name": "Nippo Centre Road",
+                "address": "Near SBI, VMC Nellore (Nellore)"
+            },
+            {
+                "name": "KVR Petrol Bunk",
+                "address": "Near In & Out Store (Nellore)"
+            },
+            {
+                "name": "Nellore Bus Stand",
+                "address": "Opp RTC Bus Stand, Infront of Sri Sarvodaya Kalasala Gate (Nellore)"
+            },
+            {
+                "name": "Nellore Mini Bypass - Boarding Zone",
+                "address": "IntrCity Boarding Zone, KMBT Travels, Mini Bypass Road (Nellore)"
+            },
+            {
+                "name": "Kovur Mini Bypass Road",
+                "address": "Inamadugu Center (Nellore)"
+            },
+            {
+                "name": "Highway - RK Family Hotel",
+                "address": "At HP Petrol Bunk (Nellore)"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ]
+    },
+    {
+        "from": "Hyderabad",
+        "to": "Nellore",
+        "buses": [
+            {
+                "name": "V Kaveri Travels",
+                "type": "Volvo 9600 Multi-Axle A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:30",
+                "arrival": "21:00",
+                "duration": "8h 30m",
+                "price": 1090.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Vikram Travels",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:50",
+                "arrival": "21:00",
+                "duration": "8h 50m",
+                "price": 739.0,
+                "rating": 4.4
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:10",
+                "arrival": "21:30",
+                "duration": "7h 40m",
+                "price": 959.0,
+                "rating": 4.6
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:15",
+                "arrival": "23:35",
+                "duration": "7h 40m",
+                "price": 655.0,
+                "rating": 4.3
+            },
+            {
+                "name": "Yolo Bus",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:15",
+                "arrival": "21:45",
+                "duration": "9h 30m",
+                "price": 739.0,
+                "rating": 4.5
+            },
+            {
+                "name": "AR & BCVR Travels",
+                "type": "Non A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:00",
+                "arrival": "19:30",
+                "duration": "10h 30m",
+                "price": 1100.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:55",
+                "arrival": "22:00",
+                "duration": "7h 55m",
+                "price": 589.0,
+                "rating": 4.4
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:20",
+                "arrival": "21:15",
+                "duration": "8h 5m",
+                "price": 629.0,
+                "rating": 4.5
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:15",
+                "arrival": "21:05",
+                "duration": "8h 10m",
+                "price": 725.0,
+                "rating": 4.7
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:15",
+                "arrival": "22:05",
+                "duration": "9h 10m",
+                "price": 691.0,
+                "rating": 4.3
+            },
+            {
+                "name": "zingbus Maxx",
+                "type": "Volvo 9600 Multi-Axle A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "09:05",
+                "arrival": "23:50",
+                "duration": "9h 15m",
+                "price": 934.0,
+                "rating": 4.7
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:25",
+                "arrival": "21:50",
+                "duration": "7h 35m",
+                "price": 649.0,
+                "rating": 4.5
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:40",
+                "arrival": "21:40",
+                "duration": "8h",
+                "price": 599.0,
+                "rating": 4.3
+            },
+            {
+                "name": "FlixBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:10",
+                "arrival": "20:55",
+                "duration": "10h 15m",
+                "price": 532.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:25",
+                "arrival": "22:10",
+                "duration": "8h 15m",
+                "price": 569.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Siri SmartBus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "04:55",
+                "arrival": "20:45",
+                "duration": "8h 10m",
+                "price": 790.0,
+                "rating": 4.5
+            },
+            {
+                "name": "FlixBus",
+                "type": "Bharat Benz A/C Seater /Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:25",
+                "arrival": "21:25",
+                "duration": "10h",
+                "price": 532.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "04:50",
+                "arrival": "21:00",
+                "duration": "7h 50m",
+                "price": 749.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Ramana Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:45",
+                "arrival": "22:45",
+                "duration": "8h",
+                "price": 711.0,
+                "rating": 4.4
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Ayyappa Gudi - Boarding Zone",
+                "address": "IntrCity Boarding Zone, SriKrishna Online Services, Ayyappa Gudi Center (Nellore)"
+            },
+            {
+                "name": "Nippo Centre Road",
+                "address": "Near SBI, VMC Nellore (Nellore)"
+            },
+            {
+                "name": "KVR Petrol Bunk",
+                "address": "Near In & Out Store (Nellore)"
+            },
+            {
+                "name": "Nellore Bus Stand",
+                "address": "Opp RTC Bus Stand, Infront of Sri Sarvodaya Kalasala Gate (Nellore)"
+            },
+            {
+                "name": "Nellore Mini Bypass - Boarding Zone",
+                "address": "IntrCity Boarding Zone, KMBT Travels, Mini Bypass Road (Nellore)"
+            },
+            {
+                "name": "Kovur Mini Bypass Road",
+                "address": "Inamadugu Center (Nellore)"
+            },
+            {
+                "name": "Highway - RK Family Hotel",
+                "address": "At HP Petrol Bunk (Nellore)"
+            }
+        ]
+    },
+    {
+        "from": "Hyderabad",
+        "to": "Pune",
+        "buses": [
+            {
+                "name": "Go Tour Travels and Holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "18:00",
+                "arrival": "05:30",
+                "duration": "11h 30m",
+                "price": 909.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Go Tour Travels and Holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "19:15",
+                "arrival": "06:15",
+                "duration": "11h",
+                "price": 909.0,
+                "rating": 4.5
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "23:20",
+                "arrival": "11:00",
+                "duration": "11h 40m",
+                "price": 609.0,
+                "rating": 4.3
+            },
+            {
+                "name": "Mythri Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "18:45",
+                "arrival": "07:30",
+                "duration": "12h 45m",
+                "price": 689.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:15",
+                "arrival": "09:10",
+                "duration": "10h 55m",
+                "price": 459.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Mythri Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "18:00",
+                "arrival": "05:00",
+                "duration": "11h",
+                "price": 1169.0,
+                "rating": 4.6
+            },
+            {
+                "name": "BSR Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:30",
+                "arrival": "07:30",
+                "duration": "11h",
+                "price": 779.0,
+                "rating": 4.5
+            },
+            {
+                "name": "FlixBus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:45",
+                "arrival": "07:35",
+                "duration": "9h 50m",
+                "price": 505.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Laxmi holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:30",
+                "arrival": "07:00",
+                "duration": "10h 30m",
+                "price": 629.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Laxmi holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "16:30",
+                "arrival": "05:00",
+                "duration": "12h 30m",
+                "price": 729.0,
+                "rating": 4.4
+            },
+            {
+                "name": "BSR Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "23:00",
+                "arrival": "09:30",
+                "duration": "10h 30m",
+                "price": 729.0,
+                "rating": 4.4
+            },
+            {
+                "name": "VSR Tours and Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:15",
+                "arrival": "08:30",
+                "duration": "11h 15m",
+                "price": 649.0,
+                "rating": 4.7
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:05",
+                "arrival": "10:25",
+                "duration": "12h 20m",
+                "price": 689.0,
+                "rating": 4.2
+            },
+            {
+                "name": "zingbus plus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "19:30",
+                "arrival": "04:15",
+                "duration": "8h 45m",
+                "price": 781.0,
+                "rating": 4.6
+            },
+            {
+                "name": "Kanuri Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:00",
+                "arrival": "06:25",
+                "duration": "10h 25m",
+                "price": 599.0,
+                "rating": 4.7
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Mohol",
+                "address": "Mohol By-Pass, Fly Over Starting, Shivaji Maharaj Chowk, Solapur Highway"
+            },
+            {
+                "name": "Temburni",
+                "address": "Temburni By-Pass, Near Hotel Jagdamba,Solapur Pune Highway"
+            },
+            {
+                "name": "Indapur",
+                "address": "Indapur, Near Sardewadi Toll Plaza, Solapur Highway"
+            },
+            {
+                "name": "Bhigwan",
+                "address": "Bhigwan, Near Rajmata Ahilyabai Holkar Chowk Flyover Ending"
+            },
+            {
+                "name": "Kurkumbh",
+                "address": "Kurkumbh, Near State Bank Of India A T M, Kurkumbh, Solapur Highway"
+            },
+            {
+                "name": "Patas",
+                "address": "Near Patas Toll Plaza, Solapur Pune Highway"
+            },
+            {
+                "name": "Yavat",
+                "address": "Near Hotel Vitthal Kamat, Pune Solapur Highway"
+            },
+            {
+                "name": "Loni Kalbhor",
+                "address": "Near Toll Plaza, Shewalewadi Mandai, N H 09 Pune Solapur Highway"
+            },
+            {
+                "name": "Hadapsar Akashwani",
+                "address": "Near Gandharva Residency, 15th Number Signal Solapur Highway"
+            },
+            {
+                "name": "Hadapsar Vaibhav Theater",
+                "address": "Opp Vaibhav Theater, Pune Solapur Road"
+            },
+            {
+                "name": "Fathima Nagar",
+                "address": "opp 93 Avenue Mall, nearby Vidyapeeth physics wallah"
+            },
+            {
+                "name": "Railway station",
+                "address": "OPP Jehangir Hospital, Graficon Arcade pillar no - 269, towards Ruby Hall clinic"
+            },
+            {
+                "name": "Jahangir Hospital",
+                "address": "OPP Jehangir Hospital, Graficon Arcade pillar no - 269, towards Ruby Hall clinic"
+            },
+            {
+                "name": "Shivaji Nagar",
+                "address": "Shivaji Nagar, Near Bank Of Maharashtra"
+            },
+            {
+                "name": "Aundh",
+                "address": "Brewman Chowk, opp MSRTC bus stand"
+            },
+            {
+                "name": "Vishal Nagar",
+                "address": "Vishal Nagar, Near Reddy Biryani Zone, Opp To Saraswat Bank"
+            },
+            {
+                "name": "Jagtap Dairy Chowk",
+                "address": "Vishal Nagar, opp Saraswat Bank near Reddy Biryani"
+            },
+            {
+                "name": "Hinje Wadi",
+                "address": "Hinje Wadi, Wakad Police Chowkey, Near Om Sri Sai Nursery"
+            },
+            {
+                "name": "Wakad",
+                "address": "Near Jaguar Land Rover Showroom, Service Rd, Shankar Kalat Nagar Wakad"
+            },
+            {
+                "name": "Nigdi",
+                "address": "Near Inspiria Mall, Old Mumbai Pune Highway, Towards Wakad"
+            },
+            {
+                "name": "Talwade",
+                "address": "Raj Parking, Tower Line Road, Premsadan Housing Society Adarsh Society Triven"
+            }
+        ]
+    },
+    {
+        "from": "Pune",
+        "to": "Hyderabad",
+        "buses": [
+            {
+                "name": "Go Tour Travels and Holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:30",
+                "arrival": "18:00",
+                "duration": "11h 30m",
+                "price": 909.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Go Tour Travels and Holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:15",
+                "arrival": "19:15",
+                "duration": "11h",
+                "price": 909.0,
+                "rating": 4.5
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "11:00",
+                "arrival": "23:20",
+                "duration": "11h 40m",
+                "price": 609.0,
+                "rating": 4.3
+            },
+            {
+                "name": "Mythri Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:30",
+                "arrival": "18:45",
+                "duration": "12h 45m",
+                "price": 689.0,
+                "rating": 4.6
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "A/C Seater / Sleeper (2+1)",
+                "ac": true,
+                "departure": "09:10",
+                "arrival": "22:15",
+                "duration": "10h 55m",
+                "price": 459.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Mythri Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:00",
+                "arrival": "18:00",
+                "duration": "11h",
+                "price": 1169.0,
+                "rating": 4.6
+            },
+            {
+                "name": "BSR Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:30",
+                "arrival": "20:30",
+                "duration": "11h",
+                "price": 779.0,
+                "rating": 4.5
+            },
+            {
+                "name": "FlixBus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:35",
+                "arrival": "21:45",
+                "duration": "9h 50m",
+                "price": 505.0,
+                "rating": 4.4
+            },
+            {
+                "name": "Laxmi holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:00",
+                "arrival": "20:30",
+                "duration": "10h 30m",
+                "price": 629.0,
+                "rating": 4.5
+            },
+            {
+                "name": "Laxmi holidays",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "05:00",
+                "arrival": "16:30",
+                "duration": "12h 30m",
+                "price": 729.0,
+                "rating": 4.4
+            },
+            {
+                "name": "BSR Tours And Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "09:30",
+                "arrival": "23:00",
+                "duration": "10h 30m",
+                "price": 729.0,
+                "rating": 4.4
+            },
+            {
+                "name": "VSR Tours and Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "08:30",
+                "arrival": "21:15",
+                "duration": "11h 15m",
+                "price": 649.0,
+                "rating": 4.7
+            },
+            {
+                "name": "IntrCity SmartBus",
+                "type": "AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "10:25",
+                "arrival": "22:05",
+                "duration": "12h 20m",
+                "price": 689.0,
+                "rating": 4.2
+            },
+            {
+                "name": "zingbus plus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "04:15",
+                "arrival": "19:30",
+                "duration": "8h 45m",
+                "price": 781.0,
+                "rating": 4.6
+            },
+            {
+                "name": "Kanuri Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:25",
+                "arrival": "20:00",
+                "duration": "10h 25m",
+                "price": 599.0,
+                "rating": 4.7
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Mohol",
+                "address": "Mohol By-Pass, Fly Over Starting, Shivaji Maharaj Chowk, Solapur Highway"
+            },
+            {
+                "name": "Temburni",
+                "address": "Temburni By-Pass, Near Hotel Jagdamba,Solapur Pune Highway"
+            },
+            {
+                "name": "Indapur",
+                "address": "Indapur, Near Sardewadi Toll Plaza, Solapur Highway"
+            },
+            {
+                "name": "Bhigwan",
+                "address": "Bhigwan, Near Rajmata Ahilyabai Holkar Chowk Flyover Ending"
+            },
+            {
+                "name": "Kurkumbh",
+                "address": "Kurkumbh, Near State Bank Of India A T M, Kurkumbh, Solapur Highway"
+            },
+            {
+                "name": "Patas",
+                "address": "Near Patas Toll Plaza, Solapur Pune Highway"
+            },
+            {
+                "name": "Yavat",
+                "address": "Near Hotel Vitthal Kamat, Pune Solapur Highway"
+            },
+            {
+                "name": "Loni Kalbhor",
+                "address": "Near Toll Plaza, Shewalewadi Mandai, N H 09 Pune Solapur Highway"
+            },
+            {
+                "name": "Hadapsar Akashwani",
+                "address": "Near Gandharva Residency, 15th Number Signal Solapur Highway"
+            },
+            {
+                "name": "Hadapsar Vaibhav Theater",
+                "address": "Opp Vaibhav Theater, Pune Solapur Road"
+            },
+            {
+                "name": "Fathima Nagar",
+                "address": "opp 93 Avenue Mall, nearby Vidyapeeth physics wallah"
+            },
+            {
+                "name": "Railway station",
+                "address": "OPP Jehangir Hospital, Graficon Arcade pillar no - 269, towards Ruby Hall clinic"
+            },
+            {
+                "name": "Jahangir Hospital",
+                "address": "OPP Jehangir Hospital, Graficon Arcade pillar no - 269, towards Ruby Hall clinic"
+            },
+            {
+                "name": "Shivaji Nagar",
+                "address": "Shivaji Nagar, Near Bank Of Maharashtra"
+            },
+            {
+                "name": "Aundh",
+                "address": "Brewman Chowk, opp MSRTC bus stand"
+            },
+            {
+                "name": "Vishal Nagar",
+                "address": "Vishal Nagar, Near Reddy Biryani Zone, Opp To Saraswat Bank"
+            },
+            {
+                "name": "Jagtap Dairy Chowk",
+                "address": "Vishal Nagar, opp Saraswat Bank near Reddy Biryani"
+            },
+            {
+                "name": "Hinje Wadi",
+                "address": "Hinje Wadi, Wakad Police Chowkey, Near Om Sri Sai Nursery"
+            },
+            {
+                "name": "Wakad",
+                "address": "Near Jaguar Land Rover Showroom, Service Rd, Shankar Kalat Nagar Wakad"
+            },
+            {
+                "name": "Nigdi",
+                "address": "Near Inspiria Mall, Old Mumbai Pune Highway, Towards Wakad"
+            },
+            {
+                "name": "Talwade",
+                "address": "Raj Parking, Tower Line Road, Premsadan Housing Society Adarsh Society Triven"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ]
+    },
+    {
+        "from": "Bangalore",
+        "to": "Hyderabad",
+        "buses": [
+            {
+                "name": "Intercity travels",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "20:35",
+                "arrival": "06:00",
+                "duration": "9h 25m",
+                "price": 899.0,
+                "rating": 4.5
+            },
+            {
+                "name": "TVK TRAVELS",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:45",
+                "arrival": "06:51",
+                "duration": "9h 6m",
+                "price": 1099.0,
+                "rating": 4.7
+            },
+            {
+                "name": "KSM Roadways",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:45",
+                "arrival": "07:47",
+                "duration": "9h 2m",
+                "price": 1200.0,
+                "rating": 4.7
+            },
+            {
+                "name": "VSR Tours and Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:55",
+                "arrival": "07:00",
+                "duration": "9h 5m",
+                "price": 869.0,
+                "rating": 4.7
+            },
+            {
+                "name": "7Hills roadways",
+                "type": "Scania AC Multi Axle Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:45",
+                "arrival": "06:55",
+                "duration": "9h 10m",
+                "price": 890.0,
+                "rating": 4.2
+            },
+            {
+                "name": "zingbus plus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "16:40",
+                "arrival": "06:35",
+                "duration": "13h 55m",
+                "price": 989.0,
+                "rating": 4.7
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Seater/Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:05",
+                "arrival": "08:35",
+                "duration": "11h 30m",
+                "price": 698.0,
+                "rating": 4.7
+            },
+            {
+                "name": "GRT Travels",
+                "type": "Volvo 9600 SLX Multi-Axle AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "23:55",
+                "arrival": "08:20",
+                "duration": "8h 25m",
+                "price": 1439.0,
+                "rating": 4.4
+            },
+            {
+                "name": "LVP Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "22:00",
+                "arrival": "07:45",
+                "duration": "9h 45m",
+                "price": 699.0,
+                "rating": 4.7
+            },
+            {
+                "name": "LVP Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "21:45",
+                "arrival": "07:30",
+                "duration": "9h 45m",
+                "price": 799.0,
+                "rating": 4.8
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Chandapura - Near Adyar Ananda Bhavan",
+                "address": "Near New Adyar Ananda Bhavan, Hosur Main Road, Chandapura,Bangalore"
+            },
+            {
+                "name": "Narayana Hrudayalaya",
+                "address": "Narayana Hrudayalaya Bus Stop,Bangalore"
+            },
+            {
+                "name": "Bommasandra",
+                "address": "Near Indian Oil Petrol bunk. fly-over entrance to words silkboard,Bommasandra,Bangalore"
+            },
+            {
+                "name": "Hebbagodi",
+                "address": "Hebbagodi Bus Stop, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Electronic City - Opp Seasons Restaurant",
+                "address": "Opp Seasons Restaurant, After E City Toll Plaza, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Rupena Agrahara",
+                "address": "Near Narasimha Swamy Temple, Roopena Agrahara Bus Stop, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Silk Board Junction - BHIVE Workspace",
+                "address": "Infront of BHIVE Workspace, Near 500D BMTC Bus Stand, towards Marathahalli"
+            },
+            {
+                "name": "HSR Layout - Opp Nandas Hotel",
+                "address": "Opp Nandas Andhra Style Restaurant,HSR Layout,Bangalore"
+            },
+            {
+                "name": "Sarjapura Road Signal",
+                "address": "Ibbalur Lake Bus Stop towards Marathahalli"
+            },
+            {
+                "name": "Bellandur - Opp Eco Space",
+                "address": "Opp Eco Space -Bellandur,Bangalore"
+            },
+            {
+                "name": "Kadubeesanahalli",
+                "address": "Infront of JP Morgan, Opp Royal oak"
+            },
+            {
+                "name": "Marthahalli - Near Multiplex",
+                "address": "Near Multiplex,Marthahalli,Bangalore"
+            },
+            {
+                "name": "Marathahalli - Near Dominos Pizza",
+                "address": "Near Dominos Pizza and Mahindra Showroom"
+            },
+            {
+                "name": "Mahadevapura -Opp More Mega Store",
+                "address": "Flyover starting, Opp More Mega Store, Mahadevapura"
+            },
+            {
+                "name": "Tin Factory",
+                "address": "Near Skywalk, Infront of OSB India Building"
+            },
+            {
+                "name": "Ramamurthy Nagar",
+                "address": "Bus stop below Foot bidge, towards Hebbal,Ramamurthy Nagar,Bangalore"
+            },
+            {
+                "name": "Kalyannagar",
+                "address": "Bus stop below Foot Bridge"
+            },
+            {
+                "name": "Hennur",
+                "address": "Hennur junction, BusStop after underpass,Hennur,Bangalore"
+            },
+            {
+                "name": "Nagawara",
+                "address": "Near Merriott,Nagawara,Bangalore"
+            },
+            {
+                "name": "Hebbal",
+                "address": "Outer Ring Rd, Mahindra PPS Showroom (City Center)"
+            },
+            {
+                "name": "Yelahanka",
+                "address": "Near Gokul Veg, Kogilu Cross towards Airport"
+            },
+            {
+                "name": "BIAL Toll",
+                "address": "Near BIAL Toll,Bangalore"
+            },
+            {
+                "name": "Devanahalli",
+                "address": "Near Hotel Palace, Bypass entrance,Devanahalli,Bangalore"
+            },
+            {
+                "name": "Chikkaballapur",
+                "address": "Bypass, Near Hotel Sri Krishna Aramane, Chikkaballapur,Bangalore"
+            },
+            {
+                "name": "Bagepalli Toll Gate",
+                "address": "Boarding At Bagepalli Toll Gate, Towards Hyderabad"
+            },
+            {
+                "name": "KIA Motors Penukonda",
+                "address": "Opp KIA Motors main gate,Bangalore"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ]
+    },
+    {
+        "from": "Hyderabad",
+        "to": "Bangalore",
+        "buses": [
+            {
+                "name": "Intercity travels",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:00",
+                "arrival": "20:35",
+                "duration": "9h 25m",
+                "price": 899.0,
+                "rating": 4.5
+            },
+            {
+                "name": "TVK TRAVELS",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:51",
+                "arrival": "21:45",
+                "duration": "9h 6m",
+                "price": 1099.0,
+                "rating": 4.7
+            },
+            {
+                "name": "KSM Roadways",
+                "type": "Bharat Benz A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:47",
+                "arrival": "22:45",
+                "duration": "9h 2m",
+                "price": 1200.0,
+                "rating": 4.7
+            },
+            {
+                "name": "VSR Tours and Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:00",
+                "arrival": "21:55",
+                "duration": "9h 5m",
+                "price": 869.0,
+                "rating": 4.7
+            },
+            {
+                "name": "7Hills roadways",
+                "type": "Scania AC Multi Axle Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:55",
+                "arrival": "21:45",
+                "duration": "9h 10m",
+                "price": 890.0,
+                "rating": 4.2
+            },
+            {
+                "name": "zingbus plus",
+                "type": "VE A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "06:35",
+                "arrival": "16:40",
+                "duration": "13h 55m",
+                "price": 989.0,
+                "rating": 4.7
+            },
+            {
+                "name": "zingbus plus",
+                "type": "A/C Seater/Sleeper (2+1)",
+                "ac": true,
+                "departure": "08:35",
+                "arrival": "21:05",
+                "duration": "11h 30m",
+                "price": 698.0,
+                "rating": 4.7
+            },
+            {
+                "name": "GRT Travels",
+                "type": "Volvo 9600 SLX Multi-Axle AC Sleeper (2+1)",
+                "ac": true,
+                "departure": "08:20",
+                "arrival": "23:55",
+                "duration": "8h 25m",
+                "price": 1439.0,
+                "rating": 4.4
+            },
+            {
+                "name": "LVP Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:45",
+                "arrival": "22:00",
+                "duration": "9h 45m",
+                "price": 699.0,
+                "rating": 4.7
+            },
+            {
+                "name": "LVP Travels",
+                "type": "A/C Sleeper (2+1)",
+                "ac": true,
+                "departure": "07:30",
+                "arrival": "21:45",
+                "duration": "9h 45m",
+                "price": 799.0,
+                "rating": 4.8
+            }
+        ],
+        "boarding_points": [
+            {
+                "name": "Ramoji Rao Film City",
+                "address": "Infront of RFC Gate (Hyderabad)"
+            },
+            {
+                "name": "Hayathnagar",
+                "address": "Infront of Sun Rise Hospital (Hyderabad)"
+            },
+            {
+                "name": "LB Nagar",
+                "address": "Near LB Nagar Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Kothapet",
+                "address": "Infront of PVT Market, Pillar No 1591 (Hyderabad)"
+            },
+            {
+                "name": "Dilsukhnagar",
+                "address": "Opp Rajdhani Theatre (Hyderabad)"
+            },
+            {
+                "name": "Putlibowli",
+                "address": "Infront of Bazar Hyderabad Stores (Hyderabad)"
+            },
+            {
+                "name": "Nampally",
+                "address": "Infront of Asian Hotel (Hyderabad)"
+            },
+            {
+                "name": "Lakdikapool",
+                "address": "Under Lakdikapool Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Panjagutta",
+                "address": "Infront of Next Galleria Mall (Hyderabad)"
+            },
+            {
+                "name": "Ameerpet",
+                "address": "Opp Mytrivanam (Hyderabad)"
+            },
+            {
+                "name": "S R Nagar",
+                "address": "Infront of Bajaj Electronics Showroom (Hyderabad)"
+            },
+            {
+                "name": "Erragadda",
+                "address": "Near Erragadda Metro Station (Hyderabad)"
+            },
+            {
+                "name": "Bharath Nagar",
+                "address": "Infront of Ashinan Cinemas (Hyderabad)"
+            },
+            {
+                "name": "Kukatpally",
+                "address": "Beside Kukatpally Metro Station (Hyderabad)"
+            },
+            {
+                "name": "KPHB",
+                "address": "Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "JNTU",
+                "address": "Infront of Ganesh Marble (Hyderabad)"
+            },
+            {
+                "name": "Miyapur",
+                "address": "Opp Bommarillu Restaurant, Near Bus Stand (Hyderabad)"
+            },
+            {
+                "name": "Allwyn X Road",
+                "address": "Infront of Indian Oil Bunk (Hyderabad)"
+            },
+            {
+                "name": "Kondapur",
+                "address": "Kondapur - Harsha Toyota (Hyderabad)"
+            },
+            {
+                "name": "Gachibowli",
+                "address": "Infront of Metilli Luxury Furniture (Hyderabad)"
+            }
+        ],
+        "dropping_points": [
+            {
+                "name": "Chandapura - Near Adyar Ananda Bhavan",
+                "address": "Near New Adyar Ananda Bhavan, Hosur Main Road, Chandapura,Bangalore"
+            },
+            {
+                "name": "Narayana Hrudayalaya",
+                "address": "Narayana Hrudayalaya Bus Stop,Bangalore"
+            },
+            {
+                "name": "Bommasandra",
+                "address": "Near Indian Oil Petrol bunk. fly-over entrance to words silkboard,Bommasandra,Bangalore"
+            },
+            {
+                "name": "Hebbagodi",
+                "address": "Hebbagodi Bus Stop, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Electronic City - Opp Seasons Restaurant",
+                "address": "Opp Seasons Restaurant, After E City Toll Plaza, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Rupena Agrahara",
+                "address": "Near Narasimha Swamy Temple, Roopena Agrahara Bus Stop, Towards Silk Board,Bangalore"
+            },
+            {
+                "name": "Silk Board Junction - BHIVE Workspace",
+                "address": "Infront of BHIVE Workspace, Near 500D BMTC Bus Stand, towards Marathahalli"
+            },
+            {
+                "name": "HSR Layout - Opp Nandas Hotel",
+                "address": "Opp Nandas Andhra Style Restaurant,HSR Layout,Bangalore"
+            },
+            {
+                "name": "Sarjapura Road Signal",
+                "address": "Ibbalur Lake Bus Stop towards Marathahalli"
+            },
+            {
+                "name": "Bellandur - Opp Eco Space",
+                "address": "Opp Eco Space -Bellandur,Bangalore"
+            },
+            {
+                "name": "Kadubeesanahalli",
+                "address": "Infront of JP Morgan, Opp Royal oak"
+            },
+            {
+                "name": "Marthahalli - Near Multiplex",
+                "address": "Near Multiplex,Marthahalli,Bangalore"
+            },
+            {
+                "name": "Marathahalli - Near Dominos Pizza",
+                "address": "Near Dominos Pizza and Mahindra Showroom"
+            },
+            {
+                "name": "Mahadevapura -Opp More Mega Store",
+                "address": "Flyover starting, Opp More Mega Store, Mahadevapura"
+            },
+            {
+                "name": "Tin Factory",
+                "address": "Near Skywalk, Infront of OSB India Building"
+            },
+            {
+                "name": "Ramamurthy Nagar",
+                "address": "Bus stop below Foot bidge, towards Hebbal,Ramamurthy Nagar,Bangalore"
+            },
+            {
+                "name": "Kalyannagar",
+                "address": "Bus stop below Foot Bridge"
+            },
+            {
+                "name": "Hennur",
+                "address": "Hennur junction, BusStop after underpass,Hennur,Bangalore"
+            },
+            {
+                "name": "Nagawara",
+                "address": "Near Merriott,Nagawara,Bangalore"
+            },
+            {
+                "name": "Hebbal",
+                "address": "Outer Ring Rd, Mahindra PPS Showroom (City Center)"
+            },
+            {
+                "name": "Yelahanka",
+                "address": "Near Gokul Veg, Kogilu Cross towards Airport"
+            },
+            {
+                "name": "BIAL Toll",
+                "address": "Near BIAL Toll,Bangalore"
+            },
+            {
+                "name": "Devanahalli",
+                "address": "Near Hotel Palace, Bypass entrance,Devanahalli,Bangalore"
+            },
+            {
+                "name": "Chikkaballapur",
+                "address": "Bypass, Near Hotel Sri Krishna Aramane, Chikkaballapur,Bangalore"
+            },
+            {
+                "name": "Bagepalli Toll Gate",
+                "address": "Boarding At Bagepalli Toll Gate, Towards Hyderabad"
+            },
+            {
+                "name": "KIA Motors Penukonda",
+                "address": "Opp KIA Motors main gate,Bangalore"
+            }
+        ]
+    }
+]

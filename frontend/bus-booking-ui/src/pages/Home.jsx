@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MapPin, ArrowRightLeft, Calendar, Search, Tag, Info, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Chatbot from "../components/Chatbot";
 
 const CITIES = [
   "Hyderabad", "Bangalore", "Chennai", "Mumbai", "Pune", "Delhi", 
@@ -436,6 +437,7 @@ const Home = () => {
         </section>
 
       </div>
+      <Chatbot />
    </div>
   );
 };
