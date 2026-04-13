@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BusFront, Heart, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
+  // Check initial login state
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
+
+  useEffect(() => {
+    // Handler to update state when auth changes
+    const handleAuthChange = () => {
+      setIsLoggedIn(!!localStorage.getItem('authToken'));
+    };
+
+    // Listen to custom event fired by AuthPage.jsx and Navbar logout
+    window.addEventListener('authStateChange', handleAuthChange);
+    // Listen to cross-tab storage changes
+    window.addEventListener('storage', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('authStateChange', handleAuthChange);
+      window.removeEventListener('storage', handleAuthChange);
+    };
+  }, []);
+
   return (
     <footer className="bg-slate-950 text-slate-300 pt-16 relative mt-auto overflow-hidden border-t border-slate-900">
       
@@ -47,7 +67,11 @@ const Footer = () => {
               <li><Link to="/" className="hover:text-red-500 transition-colors flex items-center gap-2"><span className="text-red-500/50">›</span> Home</Link></li>
               <li><Link to="/my-bookings" className="hover:text-red-500 transition-colors flex items-center gap-2"><span className="text-red-500/50">›</span> My Bookings</Link></li>
               <li><Link to="/about-project" className="hover:text-red-500 transition-colors flex items-center gap-2"><span className="text-red-500/50">›</span> About Project</Link></li>
-              <li><Link to="/login" className="hover:text-red-500 transition-colors flex items-center gap-2"><span className="text-red-500/50">›</span> Login / Register</Link></li>
+              
+              {/* Conditionally render the Login link */}
+              {!isLoggedIn && (
+                <li><Link to="/auth" className="hover:text-red-500 transition-colors flex items-center gap-2"><span className="text-red-500/50">›</span> Login / Register</Link></li>
+              )}
             </ul>
           </div>
 

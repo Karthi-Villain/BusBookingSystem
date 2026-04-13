@@ -223,7 +223,7 @@ const Seats = () => {
                     <span className="font-bold text-gray-700 text-sm">Lower Deck</span>
                     <div className="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center opacity-50"><div className="w-3 h-px bg-gray-300 transform rotate-45"></div></div>
                   </div>
-                  <div className="border-2 border-gray-200 rounded-xl p-4 bg-gray-50 flex flex-col gap-2">
+                  <div className="border-2 border-gray-200 rounded-xl p-4 bg-gray-50 flex flex-col">
                     {seatsLayout.lowerDeck.map((row, rIdx) => (
                       <div key={rIdx} className="flex gap-2">
                         {row.map((seat, sIdx) => {

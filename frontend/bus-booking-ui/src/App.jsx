@@ -10,7 +10,7 @@ import AuthPage from "./pages/AuthPage";
 import MyProfile from './pages/MyProfile';
 import Payment from './pages/Payment';
 import AboutProject from './pages/AboutProject';
-
+import Tracking from './pages/Tracking';
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
             <Route path="/login" element={<AuthPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/about-project" element={<AboutProject />} />
+            <Route path="/tracking" element={<Tracking />} />
           </Routes>
         </main>
         <Footer />

@@ -228,7 +228,19 @@ const MyBookings = () => {
                             <span className="bg-white/20 text-white border border-white/30 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                               <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div> Confirmed
                             </span>
-                            <button className="bg-emerald-500 hover:bg-emerald-400 text-white text-[11px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-colors">
+                            <button 
+                              onClick={() => navigate('/tracking', { 
+                                state: { 
+                                  source: booking.source, 
+                                  destination: booking.destination, 
+                                  date: booking.date, 
+                                  boardingTime: booking.boardingTime || "00:00", 
+                                  droppingTime: booking.droppingTime || "00:00",
+                                  pnr: booking.pnr 
+                                } 
+                              })}
+                              className="bg-emerald-500 hover:bg-emerald-400 text-white text-[16cpx] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md transition-colors cursor-pointer"
+                            >
                               <Map size={12} /> Track Bus
                             </button>
                           </div>

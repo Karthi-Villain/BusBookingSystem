@@ -125,6 +125,8 @@ const AuthPage = () => {
       if (authMode === 'login') {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userName', data.name);
+        localStorage.setItem('userEmail', data.email);
+        localStorage.setItem('userId', data.userId);
         window.dispatchEvent(new Event('authStateChange'));
 
         const returnUrl = sessionStorage.getItem('returnUrl');
