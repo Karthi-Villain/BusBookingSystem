@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Sparkles, Bot, ArrowRight } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, Bot, ArrowRight, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api"; // Assuming your axios instance is here
 
@@ -80,6 +80,7 @@ const Chatbot = () => {
         sender: "bot",
         text: data.message || "I found some options for you.",
         info: data.info || null,
+        q_type: data.q_type || null,
       };
 
       setMessages((prev) => [...prev, botMessage]);
@@ -164,33 +165,51 @@ const Chatbot = () => {
                     {msg.text}
                   </div>
 
-                  {/* Dynamic Bus Cards (If JSON has info array) */}
+                  {/* Dynamic Info Cards */}
                   {msg.info && msg.info.length > 0 && (
-                    <div className="mt-3 w-[90%] space-y-3">
-                      {msg.info.map((bus, idx) => (
-                        <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow group">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <h4 className="font-extrabold text-slate-900 text-sm">{bus.name}</h4>
-                              <p className="text-[10px] text-slate-500 font-semibold">{bus.type}</p>
-                            </div>
-                            <span className="font-black text-slate-900">₹{bus.price}</span>
-                          </div>
-                          
-                          <div className="flex items-center gap-2 text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded-lg">
-                             <span className="font-bold text-slate-700">{bus.departure}</span>
-                             <span>•</span>
-                             <span className="truncate">{bus.from || "Source"} → {bus.to || "Dest"}</span>
-                          </div>
-
-                          <button 
-                            onClick={() => navigate(`/bus/${bus.busid || 1}/seats?source=${bus.from || "Any"}&destination=${bus.to || "Any"}&date=${getLocalDate()}`)}
-                            className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white transition-colors text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 group-hover:shadow-sm"
-                          >
-                            Select Seats <ArrowRight size={14} />
-                          </button>
+                    <div className="mt-3 w-[90%] space-y-2">
+                      {msg.q_type === "stops" ? (
+                        /* ── Stops: simple list with location pin ── */
+                        <div className="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm">
+                          <p className="text-[10px] uppercase font-semibold text-slate-400 tracking-wider mb-2">
+                            Stops
+                          </p>
+                          <ul className="space-y-2">
+                            {msg.info.map((stop, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+                                <MapPin size={14} className="text-red-500 mt-0.5 shrink-0" />
+                                <span>{stop.name}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      ))}
+                      ) : (
+                        /* ── Buses / Routes: full cards with Select Seats ── */
+                        msg.info.map((bus, idx) => (
+                          <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow group">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <h4 className="font-extrabold text-slate-900 text-sm">{bus.name}</h4>
+                                <p className="text-[10px] text-slate-500 font-semibold">{bus.type}</p>
+                              </div>
+                              <span className="font-black text-slate-900">₹{bus.price}</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-2 text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded-lg">
+                               <span className="font-bold text-slate-700">{bus.departure}</span>
+                               <span>•</span>
+                               <span className="truncate">{bus.from || "Source"} → {bus.to || "Dest"}</span>
+                            </div>
+
+                            <button 
+                              onClick={() => navigate(`/bus/${bus.busid || 1}/seats?source=${bus.from || "Any"}&destination=${bus.to || "Any"}&date=${getLocalDate()}`)}
+                              className="w-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white transition-colors text-xs font-bold py-2 rounded-xl flex items-center justify-center gap-1 group-hover:shadow-sm"
+                            >
+                              Select Seats <ArrowRight size={14} />
+                            </button>
+                          </div>
+                        ))
+                      )}
                     </div>
                   )}
                 </motion.div>
