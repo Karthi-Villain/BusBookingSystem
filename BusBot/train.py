@@ -9,7 +9,7 @@ DB_DIR = "./db"
 COLLECTION_NAME = "bus_data"
 
 def process_data(filepath):
-    with open(filepath, 'r') as f:
+    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
         raw_data = json.load(f)
 
     documents, metadatas, ids = [], [], []

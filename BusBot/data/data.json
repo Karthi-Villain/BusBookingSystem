@@ -2232,7 +2232,24 @@
       {
         "faq": "What is the refund policy?",
         "answer": "Refunds are processed within 5-7 business days to the original payment method after cancellation."
-      }
+      },
+      {"faq": "hi", "answer": "Hello! How can I help you with bus bookings today?"},
+      {"faq": "hello", "answer": "Hi there! Looking for buses or routes?"},
+      {"faq": "hey", "answer": "Hey! I can help you find buses and routes."},
+      {"faq": "good morning", "answer": "Good morning! Ready to plan your journey?"},
+      {"faq": "good evening", "answer": "Good evening! How can I assist you?"},
+
+      {"faq": "thanks", "answer": "You're welcome! 😊 Let me know if you need anything else."},
+      {"faq": "thank you", "answer": "Happy to help! Have a great trip 🚍"},
+      {"faq": "ok", "answer": "👍 Got it! Let me know if you need buses or routes."},
+      {"faq": "fine", "answer": "Great! How can I assist you today?"},
+
+      {"faq": "who are you", "answer": "I am your Bus Booking Assistant. I help you find buses, routes, and stops."},
+      {"faq": "what can you do", "answer": "I can find buses, routes, ticket prices, and boarding/dropping points."},
+
+      {"faq": "bye", "answer": "Goodbye! Have a safe journey 🚍"},
+      {"faq": "see you", "answer": "See you soon! 👋"},
+      {"faq": "good night", "answer": "Good night! 🌙"}
     ]
   }
 ]
