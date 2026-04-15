@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MapPin, ArrowRightLeft, Calendar, Search, Tag, Info, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Chatbot from "../components/Chatbot";
+import AppInstallPrompt from "../components/AppInstall";
 
 const CITIES = [
   "Hyderabad", "Bangalore", "Chennai", "Mumbai", "Pune", "Delhi", 
@@ -129,6 +130,7 @@ const Home = () => {
     <div className="bg-[#f8fafc] min-h-screen pb-20 font-sans selection:bg-red-600 selection:text-white">
       
       {/* HERO SECTION */}
+      <AppInstallPrompt></AppInstallPrompt>
       <motion.div 
         initial={{ height: "100vh" }}
         animate={{ height: "60vh" }}
